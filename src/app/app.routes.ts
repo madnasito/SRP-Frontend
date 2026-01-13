@@ -3,6 +3,7 @@ import { Home } from './features/home/home';
 import { Faq } from './features/faq/faq';
 import { Ask } from './features/ask/ask';
 import { Login } from './features/login/login';
+import { Register } from './features/register/register';
 
 export const routes: Routes = [
     {
@@ -20,5 +21,9 @@ export const routes: Routes = [
     {
         path: 'login',
         component: Login
+    },
+    {
+        path: 'register',
+        component: Register
     }
 ];
