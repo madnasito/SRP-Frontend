@@ -7,7 +7,8 @@ import { Profile } from './profile/profile';
 import { Ask } from './ask/ask';
 import { Login } from './login/login';
 import { Register } from './register/register';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { ToastsContainer } from '../shared/atoms/atom-toast-container';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import { Register } from './register/register';
     Home, Faq, MyProgress, Profile, Ask, Login, Register
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
+    ToastsContainer
   ]
 })
 export class FeaturesModule { }

@@ -14,8 +14,8 @@ export class AuthService {
 
   login(loginDto: LoginDto) {
     try {
-      return this.http.post<LoginResp>(`${this.baseUrl}/login`, loginDto);
-    } catch (error) {
+      return this.http.post<LoginResp>(`${this.baseUrl}/sign-in`, loginDto);
+    } catch (error: any) {
       console.error(error);
       throw error;
     }

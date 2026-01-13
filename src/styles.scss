@@ -3,6 +3,24 @@
 /* Importing Bootstrap SCSS file. */
 @use 'bootstrap/scss/bootstrap';
 
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+.unified-focus {
+  &:focus-within {
+    .input-group-text {
+      border-color: #86b7fe;
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      border-right: none;
+      z-index: 2;
+      clip-path: inset(-0.35rem 0rem -0.35rem -0.35rem);
+    }
+    .form-control {
+      z-index: 2;
+      clip-path: inset(-0.35rem -0.35rem -0.35rem 0rem);
+    }
+  }
+}
+
 body {
   background-image: url('/images/bg.jpeg');
   background-size: cover;
