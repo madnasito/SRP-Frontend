@@ -1,48 +1,34 @@
 <header>
-    <nav class="navbar bg-transparent navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <!-- Brand logo - hidden on mobile -->
-        <a class="navbar-brand d-none d-lg-flex" routerLink="/" aria-label="Home">
-        </a>
-        
-        <!-- Mobile brand logo - visible only on mobile -->
-        <a class="navbar-brand d-lg-none" routerLink="/" aria-label="Home">
-        </a>
-        
-        <!-- Mobile toggle button -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <!-- Offcanvas menu -->
-        <div class="offcanvas offcanvas-end bg-transparent text-white" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-          <div class="offcanvas-header">
-            <!-- <h5 class="offcanvas-title" id="offcanvasNavbarLabel">{{ 'HEADER.MENU' | translate }}</h5> -->
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/platforms" routerLinkActive="active active-mobile" data-bs-dismiss="offcanvas" [attr.aria-label]="'Go to Platforms page'">
-                  <i class="bi bi-controller fs-4"></i>
-                  Platforms
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/about" routerLinkActive="active active-mobile" data-bs-dismiss="offcanvas" [attr.aria-label]="'Go to About page'">
-                  <i class="bi bi-info-circle fs-4"></i>
-                  About
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/download" routerLinkActive="active active-mobile" data-bs-dismiss="offcanvas" [attr.aria-label]="'Go to Download page'">
-                  <i class="bi bi-download fs-4"></i>
-                  Download
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+  <nav class="navbar navbar-expand-lg shadow-sm py-2" style="background-color: rgba(33, 37, 41, 0.45); backdrop-filter: blur(5px);">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/">
+        <img src="/images/academia.jpg" alt="Academia SRP" height="40">
+      </a>
+      <button class="navbar-toggler navbar-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-family: 'Montserrat', sans-serif;">
+          <li class="nav-item">
+            <a class="nav-link fs-5 text-white" routerLink="/ask" routerLinkActive="active">Ask</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-5 text-white" routerLink="/faq" routerLinkActive="active">FAQ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-5 text-white" routerLink="/login" routerLinkActive="active">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-5 text-white" routerLink="/register" routerLinkActive="active">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-5 text-white" routerLink="/my-progress" routerLinkActive="active">My Progress</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-5 text-white" routerLink="/profile" routerLinkActive="active">Profile</a>
+          </li>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
 </header>
