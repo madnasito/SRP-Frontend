@@ -1,1 +1,47 @@
-<p>register works!</p>
+<div class="container-fluid d-flex justify-content-center min-vh-100" style="padding-top: 15vh;">
+  <div class="card shadow-lg p-5 text-white" style="max-width: 600px; width: 100%; height: fit-content; background-color: rgba(33, 37, 41, 0.45); backdrop-filter: blur(5px);">
+    <div class="card-body">
+      <h1 class="card-title text-center mb-5 display-4 fw-bold">Registro</h1>
+      <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+        <div class="mb-4">
+          <label for="name" class="form-label fs-5">Nombre</label>
+          <div class="input-group input-group-lg unified-focus">
+            <span class="input-group-text bg-transparent border-end-0 text-white"><i class="bi bi-person"></i></span>
+            <input type="text" class="form-control border-start-0 text-white bg-transparent" id="name" formControlName="name">
+          </div>
+        </div>
+        <div class="mb-4">
+            <label for="email" class="form-label fs-5">Correo</label>
+            <div class="input-group input-group-lg unified-focus">
+              <span class="input-group-text bg-transparent border-end-0 text-white"><i class="bi bi-envelope"></i></span>
+              <input type="email" class="form-control border-start-0 text-white bg-transparent" id="email" aria-describedby="emailHelp" formControlName="email">
+            </div>
+          </div>
+        <div class="mb-4">
+          <label for="password" class="form-label fs-5">Contraseña</label>
+          <div class="input-group input-group-lg unified-focus">
+            <span class="input-group-text bg-transparent border-end-0 text-white"><i class="bi bi-lock"></i></span>
+            <input type="password" class="form-control border-start-0 text-white bg-transparent" id="password" formControlName="password">
+          </div>
+        </div>
+        <div class="d-grid gap-2 mt-4">
+          <button type="submit" class="btn btn-primary btn-lg fw-bold" [disabled]="registerForm.invalid">Registrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #dangerTpl>
+	<svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="24" height="24" viewBox="0 0 24 24">
+		<path
+			d="M10.872 6.831l1.695 3.904 3.654-1.561-1.79 3.426 3.333.954-3.417 1.338 2.231 4.196-4.773-2.582-2.869 2.287.413-3.004-3.792-.726 2.93-1.74-1.885-2.512 3.427.646.843-4.626zm-.786-6.831l-1.665 9.119-6.512-1.228 3.639 4.851-5.548 3.294 7.108 1.361-.834 6.076 5.742-4.577 9.438 5.104-4.288-8.064 6.834-2.677-6.661-1.907 3.25-6.22-6.98 2.982-3.523-8.114z"
+		/>
+	</svg>
+	{{errorMessage}}
+</ng-template>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+
+
