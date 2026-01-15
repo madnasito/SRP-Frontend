@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../../environments/environment.debug';
 import { CreateCourseDto } from '../../interfaces/course/create-course.dto';
 import { Course } from '../../interfaces/course/course.interface';
@@ -15,25 +16,34 @@ import { CompletedLessonResponse } from '../../interfaces/course/completed-lesso
 })
 export class CourseService {
   private http = inject(HttpClient);
+  private platformId = inject(PLATFORM_ID);
   private baseUrl = `${environment.apiUrl}/course`;
 
-  private getAuthHeaders() {
+  private getAuthHeaders(): Record<string, string> | undefined {
+    if (!isPlatformBrowser(this.platformId)) {
+      return undefined;
+    }
     const token = localStorage.getItem('token');
+    if (!token) {
+      return undefined;
+    }
     return {
       'Authorization': `Bearer ${token}`
     };
   }
 
   createCourse(course: CreateCourseDto){
-    return this.http.post<Course>(`${this.baseUrl}/create-course`, course, { 
-      headers: this.getAuthHeaders() 
-    });
+    const headers = this.getAuthHeaders();
+    return this.http.post<Course>(`${this.baseUrl}/create-course`, course, 
+      headers ? { headers } : {}
+    );
   }
 
   createLesson(lesson: CreateLessonDto){
-    return this.http.post<Lesson>(`${this.baseUrl}/create-lesson`, lesson, { 
-      headers: this.getAuthHeaders() 
-    });
+    const headers = this.getAuthHeaders();
+    return this.http.post<Lesson>(`${this.baseUrl}/create-lesson`, lesson, 
+      headers ? { headers } : {}
+    );
   }
 
   getAllCourses(): Observable<Course[]> {
@@ -41,9 +51,10 @@ export class CourseService {
   }
 
   getAllLessons(): Observable<Lesson[]> {
-    return this.http.get<Lesson[]>(`${this.baseUrl}/all-lessons`, { 
-      headers: this.getAuthHeaders() 
-    });
+    const headers = this.getAuthHeaders();
+    return this.http.get<Lesson[]>(`${this.baseUrl}/all-lessons`, 
+      headers ? { headers } : {}
+    );
   }
 
   getCourseWithLessons(id: number): Observable<CourseWithLessons> {
@@ -51,16 +62,17 @@ export class CourseService {
   }
 
   getMyProgress(): Observable<ProgressModel[]> {
-    return this.http.get<ProgressModel[]>(`${this.baseUrl}/my-progress`, {
-      headers: this.getAuthHeaders()
-    });
+    const headers = this.getAuthHeaders();
+    return this.http.get<ProgressModel[]>(`${this.baseUrl}/my-progress`, 
+      headers ? { headers } : {}
+    );
   }
 
   completeLesson(courseId: number, lessonId: number): Observable<CompletedLessonResponse> {
+    const headers = this.getAuthHeaders();
     return this.http.get<CompletedLessonResponse>(
-      `${this.baseUrl}/complete-lesson/${courseId}/${lessonId}`, {
-        headers: this.getAuthHeaders()
-      }
+      `${this.baseUrl}/complete-lesson/${courseId}/${lessonId}`, 
+      headers ? { headers } : {}
     );
   }
 }

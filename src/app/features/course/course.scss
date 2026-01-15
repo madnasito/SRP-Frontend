@@ -1,0 +1,157 @@
+// Variables
+$old-rose: #d69ca0;
+$navy-blue: #002147;
+
+.course-container {
+  background: transparent;
+}
+
+.content-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.text-rose {
+  color: $old-rose !important;
+}
+
+.course-banner {
+  width: auto;
+  max-width: 100%;
+  max-height: 450px; 
+  object-fit: contain; // Changed from cover to show full image without zoom/crop
+  display: block;
+  margin: 0 auto;
+}
+
+.course-header {
+  .btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: $old-rose;
+      border-color: $old-rose;
+      color: #fff;
+    }
+  }
+}
+
+.lessons-section {
+  padding-top: 2rem;
+}
+
+.lesson-card {
+  background: rgba(0, 33, 71, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border-color: $old-rose;
+  }
+
+  .lesson-number {
+    background: linear-gradient(135deg, $old-rose 0%, darken($old-rose, 10%) 100%);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lesson-title {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+  }
+
+  .lesson-content {
+    color: #adb5bd;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .btn-navy {
+    margin-top: auto;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background-color: $old-rose !important;
+      border-color: $old-rose !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(214, 156, 160, 0.4);
+    }
+  }
+}
+
+// Modal Styles
+.modal {
+  backdrop-filter: blur(8px);
+  z-index: 1060;
+}
+
+.modal-dialog {
+  max-width: 90%;
+  width: 1000px;
+}
+
+.modal-content {
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+.btn-close {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 50%;
+  opacity: 1;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: $old-rose;
+    transform: rotate(90deg);
+  }
+}
+
+.ratio-16x9 {
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .course-banner {
+    max-height: 300px;
+  }
+
+  .course-header {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .modal-dialog {
+    margin: 0.5rem;
+    max-width: calc(100% - 1rem);
+  }
+}
+

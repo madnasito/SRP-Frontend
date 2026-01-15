@@ -1,1 +1,67 @@
-<p>home works!</p>
+<div class="home-container container-fluid min-vh-100 py-5">
+  <div class="content-wrapper">
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold text-white mb-3">Academia SRP</h1>
+      <p class="lead text-rose">Descubre nuestros cursos de transformación</p>
+    </div>
+
+    <div *ngIf="loading" class="text-center">
+      <div class="spinner-border text-rose" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && courses.length === 0" class="text-center text-white">
+      <p class="lead">No hay cursos disponibles en este momento.</p>
+    </div>
+
+    <div *ngIf="!loading && courses.length > 0" class="carousel-container">
+      <div id="coursesCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button 
+            *ngFor="let course of courses; let i = index" 
+            type="button" 
+            [attr.data-bs-target]="'#coursesCarousel'" 
+            [attr.data-bs-slide-to]="i" 
+            [class.active]="i === 0"
+            [attr.aria-current]="i === 0 ? 'true' : null"
+            [attr.aria-label]="'Slide ' + (i + 1)"
+          ></button>
+        </div>
+
+        <div class="carousel-inner">
+          <div 
+            *ngFor="let course of courses; let i = index" 
+            class="carousel-item" 
+            [class.active]="i === 0"
+          >
+            <div class="course-card" (click)="navigateToCourse(course.id)">
+              <div class="course-image-container">
+                <img 
+                  [src]="course.imageUrl" 
+                  [alt]="course.title"
+                  class="course-image"
+                >
+                <div class="course-overlay">
+                  <h3 class="course-title">{{ course.title }}</h3>
+                  <button class="btn btn-navy btn-lg mt-3">
+                    <i class="bi bi-play-circle me-2"></i>Ver Curso
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#coursesCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#coursesCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

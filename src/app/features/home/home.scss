@@ -1,0 +1,131 @@
+// Variables
+$old-rose: #d69ca0;
+$navy-blue: #002147;
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.text-rose {
+  color: $old-rose !important;
+}
+
+.carousel-container {
+  max-width: 380px; // Further reduced width
+  margin: 0 auto;
+}
+
+.course-card {
+  cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.course-image-container {
+  position: relative;
+  width: 100%;
+  height: 520px; // Reduced height
+  overflow: hidden;
+}
+
+.course-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; // Maintains aspect ratio by cropping sides if necessary
+}
+
+.course-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 50%,
+    transparent 100%
+  );
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 200px;
+}
+
+.course-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.btn-navy {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: $old-rose !important;
+    border-color: $old-rose !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(214, 156, 160, 0.4);
+  }
+}
+
+.carousel-indicators {
+  button {
+    background-color: $old-rose;
+    opacity: 0.5;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.8));
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .course-image-container {
+    height: 400px;
+  }
+
+  .course-title {
+    font-size: 1.5rem;
+  }
+
+  .course-overlay {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .course-image-container {
+    height: 300px;
+  }
+
+  .course-title {
+    font-size: 1.25rem;
+  }
+}

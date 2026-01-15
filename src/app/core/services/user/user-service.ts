@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../../environments/environment.debug';
 import { UpdateUserDto } from '../../interfaces/user/update-user.dto';
 import { UpdatePasswordDto } from '../../interfaces/user/update-password.dto';
@@ -11,24 +12,33 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   private http = inject(HttpClient);
+  private platformId = inject(PLATFORM_ID);
   private baseUrl = `${environment.apiUrl}/user`;
 
-  private getAuthHeaders() {
+  private getAuthHeaders(): Record<string, string> | undefined {
+    if (!isPlatformBrowser(this.platformId)) {
+      return undefined;
+    }
     const token = localStorage.getItem('token');
+    if (!token) {
+      return undefined;
+    }
     return {
       'Authorization': `Bearer ${token}`
     };
   }
   
   updateUser(updateUserDto: UpdateUserDto): Observable<UserDto> {
-    return this.http.patch<UserDto>(`${this.baseUrl}/edit`, updateUserDto, {
-      headers: this.getAuthHeaders()
-    });
+    const headers = this.getAuthHeaders();
+    return this.http.patch<UserDto>(`${this.baseUrl}/edit`, updateUserDto, 
+      headers ? { headers } : {}
+    );
   }
 
   updatePassword(updatePasswordDto: UpdatePasswordDto): Observable<UserDto>{
-    return this.http.patch<UserDto>(`${this.baseUrl}/update-password`, updatePasswordDto, {
-      headers: this.getAuthHeaders()
-    });
+    const headers = this.getAuthHeaders();
+    return this.http.patch<UserDto>(`${this.baseUrl}/update-password`, updatePasswordDto, 
+      headers ? { headers } : {}
+    );
   }
 }

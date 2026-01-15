@@ -6,6 +6,7 @@ import { Login } from './features/login/login';
 import { Register } from './features/register/register';
 import { Profile } from './features/profile/profile';
 import { MyProgress } from './features/my-progress/my-progress';
+import { Course } from './features/course/course';
 
 export const routes: Routes = [
     {
@@ -35,5 +36,9 @@ export const routes: Routes = [
     {
         path: 'profile',
         component: Profile
+    },
+    {
+        path: 'course/:id',
+        component: Course
     }
 ];

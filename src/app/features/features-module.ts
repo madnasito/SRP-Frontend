@@ -9,11 +9,12 @@ import { Login } from './login/login';
 import { Register } from './register/register';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastsContainer } from '../shared/atoms/atom-toast-container';
+import { Course } from './course/course';
 
 
 @NgModule({
   declarations: [
-    Home, Faq, MyProgress, Profile, Ask, Login, Register
+    Home, Faq, MyProgress, Profile, Ask, Login, Register, Course
   ],
   imports: [
     CommonModule,
