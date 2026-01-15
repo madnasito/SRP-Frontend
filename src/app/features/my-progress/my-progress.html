@@ -1,1 +1,58 @@
-<p>my-progress works!</p>
+<div class="progress-container container-fluid min-vh-100 py-4">
+  <div class="content-wrapper">
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold text-white mb-3">Mi Progreso</h1>
+      <p class="lead text-rose">Sigue tu camino de aprendizaje</p>
+    </div>
+
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-rose" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && progressList.length === 0" class="text-center text-white py-5">
+      <div class="empty-state p-5 rounded-4 border border-secondary bg-dark-subtle">
+        <i class="bi bi-journal-x display-1 text-secondary mb-3"></i>
+        <p class="lead">Aún no has comenzado ningún curso.</p>
+        <button class="btn btn-navy btn-lg mt-3" routerLink="/">
+          Explorar Cursos
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && progressList.length > 0" class="row g-4">
+      <div *ngFor="let item of progressList" class="col-12 col-md-6 col-lg-4">
+        <div class="course-progress-card h-100" (click)="viewCourse(item.course.id)">
+          <div class="card-img-container">
+            <img [src]="item.course.imageUrl" [alt]="item.course.title" class="card-img-top">
+            <div class="progress-badge">{{ item.percent }}%</div>
+          </div>
+          <div class="card-body p-4">
+            <h5 class="card-title text-white fw-bold mb-2">{{ item.course.title }}</h5>
+            <p class="card-text text-secondary line-clamp-2 mb-4">{{ item.course.description }}</p>
+            
+            <div class="progress-info mb-2 d-flex justify-content-between text-secondary small">
+              <span>{{ item.completedLessons }} de {{ item.totalLessons }} clases</span>
+              <span>{{ item.percent }}% completado</span>
+            </div>
+            <div class="progress progress-custom mb-3">
+              <div 
+                class="progress-bar" 
+                role="progressbar" 
+                [style.width.%]="item.percent"
+                [attr.aria-valuenow]="item.percent" 
+                aria-valuemin="0" 
+                aria-valuemax="100"
+              ></div>
+            </div>
+            
+            <button class="btn btn-navy w-100 mt-2">
+              Continuar Aprendiendo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

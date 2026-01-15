@@ -18,17 +18,13 @@ export class Home implements OnInit {
   loading = true;
 
   ngOnInit(): void {
-    console.log('Home component initializing...');
     this.courseService.getAllCourses().subscribe({
       next: (courses) => {
-        console.log('Courses loaded:', courses);
         this.courses = courses.filter(c => c.active);
         this.loading = false;
-        this.cdr.detectChanges(); // Force change detection
+        this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Error loading courses:', error);
-        console.error('Error details:', JSON.stringify(error, null, 2));
         this.loading = false;
         this.cdr.detectChanges(); // Force change detection
       }

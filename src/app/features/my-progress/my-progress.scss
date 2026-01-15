@@ -1,0 +1,116 @@
+// Variables
+$old-rose: #d69ca0;
+$navy-blue: #002147;
+
+.progress-container {
+  background: transparent;
+}
+
+.content-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.text-rose {
+  color: $old-rose !important;
+}
+
+.course-progress-card {
+  background: rgba(0, 33, 71, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    border-color: $old-rose;
+
+    .card-img-container img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.card-img-container {
+  position: relative;
+  height: 300px; // Slightly reduced height
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2); // Darker background for 'contain' areas
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; // Changed from cover to show full image without zoom
+    transition: transform 0.3s ease;
+    padding: 1rem; // Add a little padding so image doesn't touch edges
+  }
+
+  .progress-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba($navy-blue, 0.9);
+    color: $old-rose;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    border: 1px solid rgba($old-rose, 0.3);
+    backdrop-filter: blur(4px);
+  }
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2; // Standard property
+  overflow: hidden;
+}
+
+.progress-custom {
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+
+  .progress-bar {
+    background: linear-gradient(90deg, $old-rose 0%, lighten($old-rose, 10%) 100%);
+    box-shadow: 0 0 10px rgba($old-rose, 0.3);
+  }
+}
+
+.btn-navy {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: $old-rose !important;
+    border-color: $old-rose !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(214, 156, 160, 0.4);
+  }
+}
+
+.empty-state {
+  max-width: 500px;
+  margin: 0 auto;
+  background: rgba(0, 33, 71, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .progress-container {
+    padding-top: 2rem;
+  }
+  
+  .display-4 {
+    font-size: 2.5rem;
+  }
+}

@@ -32,26 +32,35 @@ export class Course implements OnInit {
   }
 
   loadCourse(): void {
-    console.log('Loading course with ID:', this.courseId);
     this.courseService.getCourseWithLessons(this.courseId).subscribe({
       next: (course) => {
-        console.log('Course loaded:', course);
         this.course = course;
         this.loading = false;
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Error loading course:', error);
         this.loading = false;
         this.cdr.detectChanges();
       }
     });
   }
 
-  openVideoModal(url: string): void {
+  openVideoModal(url: string, lessonId: number): void {
     const embedUrl = this.getYouTubeEmbedUrl(url);
     this.selectedVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
     this.isModalOpen = true;
+    
+    // Mark lesson as complete
+    this.courseService.completeLesson(this.courseId, lessonId).subscribe({
+      next: () => {
+        // We could refresh course data here if we had completion indicators in the UI
+        console.log(`Lesson ${lessonId} marked as complete`);
+      },
+      error: (error) => {
+        console.error('Error marking lesson as complete:', error);
+      }
+    });
+
     this.cdr.detectChanges();
   }
 
@@ -69,9 +78,10 @@ export class Course implements OnInit {
     } else if (url.includes('youtu.be/')) {
       videoId = url.split('youtu.be/')[1].split('?')[0];
     } else if (url.includes('youtube.com/embed/')) {
-      return url; // Already an embed URL
+      videoId = url.split('youtube.com/embed/')[1].split('?')[0];
     }
 
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    // Use youtube-nocookie.com which often helps with embedding issues and privacy
+    return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0&rel=0`;
   }
 }
