@@ -4,6 +4,8 @@ import { Faq } from './features/faq/faq';
 import { Ask } from './features/ask/ask';
 import { Login } from './features/login/login';
 import { Register } from './features/register/register';
+import { Profile } from './features/profile/profile';
+import { MyProgress } from './features/my-progress/my-progress';
 
 export const routes: Routes = [
     {
@@ -25,5 +27,13 @@ export const routes: Routes = [
     {
         path: 'register',
         component: Register
+    },
+    {
+        path: 'my-progress',
+        component: MyProgress
+    },
+    {
+        path: 'profile',
+        component: Profile
     }
 ];
