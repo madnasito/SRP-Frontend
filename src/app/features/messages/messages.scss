@@ -1,0 +1,81 @@
+$old-rose: #d69ca0;
+$navy-blue: #002147;
+
+.messages-container {
+  background: transparent;
+}
+
+.content-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.text-rose {
+  color: $old-rose !important;
+}
+
+.message-card {
+  background: rgba(33, 37, 41, 0.45);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateX(8px);
+    border-color: rgba($old-rose, 0.5) !important;
+    background: rgba(33, 37, 41, 0.6);
+  }
+}
+
+.contact-avatar {
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba($old-rose, 0.2);
+}
+
+.bg-navy {
+  background-color: $navy-blue;
+}
+
+.bg-black-alpha {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.border-rose {
+  border-color: $old-rose !important;
+}
+
+.btn-navy-outline {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  background: transparent;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: $old-rose;
+    color: $old-rose;
+    background: rgba($old-rose, 0.05);
+  }
+}
+
+.white-space-pre-wrap {
+  white-space: pre-wrap;
+}
+
+.empty-state {
+  background: rgba(33, 37, 41, 0.3) !important;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .display-4 {
+    font-size: 2.2rem;
+  }
+}

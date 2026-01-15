@@ -10,6 +10,7 @@ import { Lesson } from '../../interfaces/course/lesson.interface';
 import { CourseWithLessons } from '../../interfaces/course/course-with-lessons.interface';
 import { ProgressModel } from '../../interfaces/course/progress-model.interface';
 import { CompletedLessonResponse } from '../../interfaces/course/completed-lesson-resp.interface';
+import { EditCourseDto } from '../../interfaces/course/edit-course.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -72,6 +73,27 @@ export class CourseService {
     const headers = this.getAuthHeaders();
     return this.http.get<CompletedLessonResponse>(
       `${this.baseUrl}/complete-lesson/${courseId}/${lessonId}`, 
+      headers ? { headers } : {}
+    );
+  }
+
+  deleteCourse(id: number): Observable<void> {
+    const headers = this.getAuthHeaders();
+    return this.http.delete<void>(`${this.baseUrl}/${id}`, 
+      headers ? { headers } : {}
+    );
+  }
+
+  deleteLesson(id: number): Observable<void> {
+    const headers = this.getAuthHeaders();
+    return this.http.delete<void>(`${this.baseUrl}/lesson/${id}`, 
+      headers ? { headers } : {}
+    );
+  }
+
+  editCourse(course: EditCourseDto): Observable<Course> {
+    const headers = this.getAuthHeaders();
+    return this.http.patch<Course>(`${this.baseUrl}/edit-course`, course, 
       headers ? { headers } : {}
     );
   }

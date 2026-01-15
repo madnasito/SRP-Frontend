@@ -15,4 +15,8 @@ export class ContactService {
   createMessage(message: CreateContactMessageDto) {
     return this.http.post<ContactMessageResponse>(`${this.baseUrl}/create-message`, message);
   }
+
+  getMessages() {
+    return this.http.get<ContactMessageResponse[]>(`${this.baseUrl}/messages`);
+  }
 }

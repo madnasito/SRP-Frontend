@@ -1,1 +1,185 @@
-<p>courses works!</p>
+<div class="admin-courses-container container-fluid min-vh-100 py-4">
+  <div class="content-wrapper">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <div>
+        <h1 class="display-4 fw-bold text-white mb-1">Administración de Cursos</h1>
+        <p class="text-rose lead">Gestiona tu contenido educativo</p>
+      </div>
+      <button class="btn btn-navy btn-lg" (click)="openCreateCourseModal()">
+        <i class="bi bi-plus-lg me-2"></i>Nuevo Curso
+      </button>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-rose" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+
+    <!-- Courses Table -->
+    <div *ngIf="!loading" class="courses-table-container rounded-4 shadow-lg overflow-hidden border border-secondary">
+      <table class="table table-dark table-hover mb-0 align-middle">
+        <thead>
+          <tr>
+            <th class="ps-4">Curso</th>
+            <th>Descripción</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of courses">
+            <td class="ps-4 py-3">
+              <div class="d-flex align-items-center">
+                <img [src]="course.imageUrl" [alt]="course.title" class="rounded-3 me-3 course-thumb">
+                <span class="fw-bold">{{ course.title }}</span>
+              </div>
+            </td>
+            <td><p class="mb-0 line-clamp-1 text-secondary small">{{ course.description }}</p></td>
+            <td class="text-center">
+              <div class="btn-group">
+                <button class="btn btn-sm btn-outline-light" (click)="openManageLessons(course.id)" title="Gestionar Clases">
+                  <i class="bi bi-collection-play"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-primary mx-1" (click)="openEditCourseModal(course)" title="Editar">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteCourse(course.id)" title="Eliminar">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="courses.length === 0">
+            <td colspan="3" class="text-center py-5 text-secondary">
+              No hay cursos registrados. Haz clic en "Nuevo Curso" para comenzar.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Course Create/Edit Modal -->
+    <div class="modal fade show" [class.d-block]="showCourseModal" *ngIf="showCourseModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-modal border-secondary text-white">
+          <div class="modal-header border-secondary p-4">
+            <h5 class="modal-title fw-bold">
+              {{ isEditingCourse ? 'Editar Curso' : 'Crear Nuevo Curso' }}
+            </h5>
+            <button type="button" class="btn-close btn-close-white" (click)="closeCourseModal()"></button>
+          </div>
+          <div class="modal-body p-4">
+            <form [formGroup]="courseForm" (ngSubmit)="saveCourse()">
+              <div class="mb-3">
+                <label class="form-label small text-secondary">Título del Curso</label>
+                <input type="text" class="form-control bg-dark text-white border-secondary" formControlName="title" placeholder="Ej: Master en...">
+              </div>
+              <div class="mb-3">
+                <label class="form-label small text-secondary">Descripción</label>
+                <textarea class="form-control bg-dark text-white border-secondary" formControlName="description" rows="3" placeholder="Describe brevemente el curso..."></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small text-secondary">URL de la Imagen (Vertical/Portrait)</label>
+                <input type="text" class="form-control bg-dark text-white border-secondary" formControlName="imageUrl" placeholder="https://ejemplo.com/imagen.jpg">
+              </div>
+              <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-navy py-2" [disabled]="courseForm.invalid">
+                  {{ isEditingCourse ? 'Guardar Cambios' : 'Crear Curso' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manage Lessons Modal -->
+    <div class="modal fade show" [class.d-block]="showManageLessonsModal" *ngIf="showManageLessonsModal">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content glass-modal border-secondary text-white">
+          <div class="modal-header border-secondary p-4">
+            <h5 class="modal-title fw-bold">Clases: {{ selectedCourse?.title }}</h5>
+            <button type="button" class="btn-close btn-close-white" (click)="closeManageLessons()"></button>
+          </div>
+          <div class="modal-body p-4 overflow-auto" style="max-height: 70vh;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h6 class="text-rose mb-0">Listado de Clases</h6>
+              <button class="btn btn-sm btn-navy" (click)="openAddLessonModal()">
+                <i class="bi bi-plus-lg me-1"></i>Añadir Clase
+              </button>
+            </div>
+
+            <div class="lessons-list">
+              <div *ngFor="let lesson of selectedCourse?.lessons; let i = index" class="lesson-item p-3 mb-2 rounded-3 border border-secondary d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="text-secondary small me-2">#{{ i + 1 }}</span>
+                  <span class="fw-bold">{{ lesson.title }}</span>
+                </div>
+                <button class="btn btn-link text-danger p-0" (click)="deleteLesson(lesson.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+              <div *ngIf="selectedCourse?.lessons?.length === 0" class="text-center py-4 text-secondary italic">
+                Aún no hay clases para este curso.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Lesson Modal -->
+    <div class="modal fade show" [class.d-block]="showLessonModal" *ngIf="showLessonModal" style="z-index: 1060;">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-modal border-rose text-white shadow-lg">
+          <div class="modal-header border-secondary p-4">
+            <h5 class="modal-title fw-bold">Añadir Nueva Clase</h5>
+            <button type="button" class="btn-close btn-close-white" (click)="closeLessonModal()"></button>
+          </div>
+          <div class="modal-body p-4">
+            <form [formGroup]="lessonForm" (ngSubmit)="saveLesson()">
+              <div class="mb-3">
+                <label class="form-label small text-secondary">Título de la Clase</label>
+                <input type="text" class="form-control bg-dark text-white border-secondary" formControlName="title" placeholder="Ej: Introducción al Módulo">
+              </div>
+              <div class="mb-3">
+                <label class="form-label small text-secondary">Contenido/Resumen</label>
+                <textarea class="form-control bg-dark text-white border-secondary" formControlName="content" rows="2" placeholder="De qué trata esta lección..."></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small text-secondary">URL del Video (YouTube)</label>
+                <input type="text" class="form-control bg-dark text-white border-secondary" formControlName="videoUrl" placeholder="https://www.youtube.com/watch?v=...">
+              </div>
+              <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-navy py-2" [disabled]="lessonForm.invalid">
+                  Guardar Clase
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showCourseModal || showManageLessonsModal || showLessonModal"></div>
+
+<ng-template #dangerTpl>
+	<div class="d-flex align-items-center">
+		<i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+		<span>{{errorMessage}}</span>
+	</div>
+</ng-template>
+
+<ng-template #successTpl>
+	<div class="d-flex align-items-center">
+		<i class="bi bi-check-circle-fill me-2 fs-4"></i>
+		<span>{{successMessage}}</span>
+	</div>
+</ng-template>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

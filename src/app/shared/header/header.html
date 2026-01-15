@@ -12,6 +12,9 @@
           <li class="nav-item" *ngIf="isAdmin">
             <a class="nav-link fs-5 text-white" routerLink="/courses" routerLinkActive="active">Cursos</a>
           </li>
+          <li class="nav-item" *ngIf="isAdmin">
+            <a class="nav-link fs-5 text-white" routerLink="/messages" routerLinkActive="active">Mensajes</a>
+          </li>
           <li class="nav-item" *ngIf="!isAdmin">
             <a class="nav-link fs-5 text-white" routerLink="/ask" routerLinkActive="active">Preguntar</a>
           </li>

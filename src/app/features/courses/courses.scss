@@ -1,0 +1,124 @@
+$old-rose: #d69ca0;
+$navy-blue: #002147;
+
+.admin-courses-container {
+  background: transparent;
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.text-rose {
+  color: $old-rose !important;
+}
+
+.btn-navy {
+  background-color: $navy-blue;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: lighten($navy-blue, 5%);
+    border-color: $old-rose;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.courses-table-container {
+  background: rgba(33, 37, 41, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-hover-bg: rgba(255, 255, 255, 0.05);
+  
+  thead th {
+    background: rgba($navy-blue, 0.5);
+    color: $old-rose;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 1.25rem 1rem;
+  }
+
+  tbody td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+  }
+}
+
+.course-thumb {
+  width: 50px;
+  height: 70px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  line-clamp: 1; // Standard property
+  overflow: hidden;
+}
+
+.glass-modal {
+  background: rgba(13, 17, 23, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.lesson-item {
+  background: rgba(255, 255, 255, 0.03);
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.form-control:focus {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: $old-rose;
+  color: white;
+  box-shadow: 0 0 0 0.25rem rgba($old-rose, 0.25);
+}
+
+.border-rose {
+  border-color: rgba($old-rose, 0.5) !important;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+}
+
+// Mobile
+@media (max-width: 768px) {
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .display-4 {
+    font-size: 2rem;
+  }
+}
