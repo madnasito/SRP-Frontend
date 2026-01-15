@@ -7,6 +7,7 @@ import { Register } from './features/register/register';
 import { Profile } from './features/profile/profile';
 import { MyProgress } from './features/my-progress/my-progress';
 import { Course } from './features/course/course';
+import { Courses } from './features/courses/courses';
 
 export const routes: Routes = [
     {
@@ -40,5 +41,9 @@ export const routes: Routes = [
     {
         path: 'course/:id',
         component: Course
+    },
+    {
+        path: 'courses',
+        component: Courses
     }
 ];

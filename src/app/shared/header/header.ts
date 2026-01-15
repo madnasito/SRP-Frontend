@@ -14,7 +14,9 @@ export class Header implements OnInit, OnDestroy {
   private router = inject(Router);
   
   isAuthenticated = false;
+  isAdmin = false;
   private authSubscription?: Subscription;
+  private userSubscription?: Subscription;
 
   ngOnInit(): void {
     this.authSubscription = this.authService.isAuthenticated$.subscribe(
@@ -22,11 +24,20 @@ export class Header implements OnInit, OnDestroy {
         this.isAuthenticated = isAuth;
       }
     );
+
+    this.userSubscription = this.authService.currentUser$.subscribe(
+      (user) => {
+        this.isAdmin = !!user?.admin;
+      }
+    );
   }
 
   ngOnDestroy(): void {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
+    }
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
     }
   }
 
