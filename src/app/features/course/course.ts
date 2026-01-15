@@ -1,8 +1,10 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CourseService } from '../../core/services/course/course-service';
 import { CourseWithLessons } from '../../core/interfaces/course/course-with-lessons.interface';
+import { AuthService } from '../../core/services/auth/auth';
+import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-course',
@@ -16,10 +18,15 @@ export class Course implements OnInit {
   private courseService = inject(CourseService);
   private cdr = inject(ChangeDetectorRef);
   private sanitizer = inject(DomSanitizer);
+  private authService = inject(AuthService);
+  private toastService = inject(ToastService);
+
+  @ViewChild('dangerTpl') dangerTpl!: TemplateRef<any>;
 
   course: CourseWithLessons | null = null;
   loading = true;
   courseId: number = 0;
+  errorMessage: string = '';
   
   selectedVideoUrl: SafeResourceUrl | null = null;
   isModalOpen = false;
@@ -46,6 +53,17 @@ export class Course implements OnInit {
   }
 
   openVideoModal(url: string, lessonId: number): void {
+    if (!this.authService.isAuthenticated()) {
+      this.errorMessage = 'Debes iniciar sesión para ver esta clase';
+      this.toastService.show({
+        template: this.dangerTpl,
+        classname: 'bg-danger text-light',
+        delay: 5000
+      });
+      this.router.navigate(['/login']);
+      return;
+    }
+
     const embedUrl = this.getYouTubeEmbedUrl(url);
     this.selectedVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
     this.isModalOpen = true;

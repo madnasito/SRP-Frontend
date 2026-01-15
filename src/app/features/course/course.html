@@ -94,3 +94,12 @@
     </div>
   </div>
 </div>
+
+<ng-template #dangerTpl>
+	<div class="d-flex align-items-center">
+		<i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+		<span>{{errorMessage}}</span>
+	</div>
+</ng-template>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
