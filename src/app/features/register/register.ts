@@ -36,7 +36,6 @@ export class Register {
       const registerDto = this.registerForm.value as RegisterDto;
       this.authService.register(registerDto).subscribe({
         next: (response: RegisterResp ) => {
-          localStorage.setItem('token', response.token);
           this.router.navigate(['/']);
         },
         error: (error: any) => {
