@@ -1,1 +1,116 @@
-<p>profile works!</p>
+<div class="profile-container container-fluid min-vh-100 d-flex align-items-center justify-content-center py-3">
+  <div class="profile-content">
+    <!-- User Name Title -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold text-white">{{ currentUser?.name || 'Mi Perfil' }}</h1>
+      <p class="text-rose lead">Gestiona tu información personal</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Update Profile Form -->
+      <div class="col-12 col-lg-6">
+        <div class="card shadow-lg border-0 rounded-4">
+          <div class="card-body p-4">
+            <h2 class="h4 text-navy-blue mb-4">
+              <i class="bi bi-person-circle me-2"></i>Información Personal
+            </h2>
+            
+            <form [formGroup]="profileForm" (ngSubmit)="onUpdateProfile()">
+              <div class="mb-3">
+                <label for="name" class="form-label text-muted small fw-semibold">NOMBRE</label>
+                <input 
+                  type="text" 
+                  class="form-control bg-light" 
+                  id="name" 
+                  formControlName="name"
+                  placeholder="Tu nombre completo"
+                >
+                <div *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched" class="text-danger small mt-1">
+                  El nombre es requerido.
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="email" class="form-label text-muted small fw-semibold">CORREO ELECTRÓNICO</label>
+                <input 
+                  type="email" 
+                  class="form-control bg-light" 
+                  id="email" 
+                  formControlName="email"
+                  placeholder="tu@correo.com"
+                >
+                <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="text-danger small mt-1">
+                  Ingresa un correo válido.
+                </div>
+              </div>
+
+              <div class="d-grid">
+                <button 
+                  type="submit" 
+                  class="btn btn-navy btn-lg rounded-pill fw-bold"
+                  [disabled]="profileForm.invalid"
+                >
+                  <i class="bi bi-check-circle me-2"></i>Actualizar Información
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Update Password Form -->
+      <div class="col-12 col-lg-6">
+        <div class="card shadow-lg border-0 rounded-4">
+          <div class="card-body p-4">
+            <h2 class="h4 text-navy-blue mb-4">
+              <i class="bi bi-shield-lock me-2"></i>Cambiar Contraseña
+            </h2>
+            
+            <form [formGroup]="passwordForm" (ngSubmit)="onUpdatePassword()">
+              <div class="mb-4">
+                <label for="password" class="form-label text-muted small fw-semibold">NUEVA CONTRASEÑA</label>
+                <input 
+                  type="password" 
+                  class="form-control bg-light" 
+                  id="password" 
+                  formControlName="password"
+                  placeholder="Mínimo 6 caracteres"
+                >
+                <div *ngIf="passwordForm.get('password')?.invalid && passwordForm.get('password')?.touched" class="text-danger small mt-1">
+                  La contraseña debe tener al menos 6 caracteres.
+                </div>
+              </div>
+
+              <div class="d-grid">
+                <button 
+                  type="submit" 
+                  class="btn btn-navy btn-lg rounded-pill fw-bold"
+                  [disabled]="passwordForm.invalid"
+                >
+                  <i class="bi bi-key me-2"></i>Cambiar Contraseña
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Templates -->
+<ng-template #successTpl>
+  <span class="d-flex align-items-center gap-2">
+    <i class="bi bi-check-circle-fill"></i>
+    {{ successMessage }}
+  </span>
+</ng-template>
+
+<ng-template #dangerTpl>
+  <span class="d-flex align-items-center gap-2">
+    <i class="bi bi-exclamation-circle-fill"></i>
+    {{ errorMessage }}
+  </span>
+</ng-template>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

@@ -1,0 +1,80 @@
+// Variables
+$navy-blue: #002147;
+$old-rose: #d69ca0;
+
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2rem !important; // Reduce spacing
+  align-items: flex-start !important; // Move content up
+}
+
+.profile-content {
+  width: 100%;
+}
+
+.text-navy-blue {
+  color: #fff !important; // White for dark mode
+}
+
+.text-rose {
+  color: $old-rose !important;
+}
+
+.card {
+  background: rgba(0, 33, 71, 0.85); // Dark semi-transparent Navy
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  h2 {
+    color: $old-rose !important; // Use rose for card titles
+  }
+}
+
+.form-label {
+  letter-spacing: 1px;
+  color: #adb5bd !important; // Light gray labels
+}
+
+.form-control {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff !important;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:focus {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: $old-rose;
+    box-shadow: 0 0 0 0.25rem rgba(214, 156, 160, 0.25);
+  }
+}
+
+.btn-navy {
+  transition: all 0.3s ease;
+  
+  &:hover:not(:disabled) {
+    background-color: $old-rose !important;
+    border-color: $old-rose !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(214, 156, 160, 0.4);
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 992px) {
+  .profile-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1.5rem !important;
+  }
+}
+

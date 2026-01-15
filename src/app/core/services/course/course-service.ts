@@ -15,19 +15,25 @@ import { CompletedLessonResponse } from '../../interfaces/course/completed-lesso
 })
 export class CourseService {
   private http = inject(HttpClient);
-
   private baseUrl = `${environment.apiUrl}/course`;
 
-  private token = localStorage.getItem('token');
-
-  private authorization = `Bearer ${this.token}`;
+  private getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+      'Authorization': `Bearer ${token}`
+    };
+  }
 
   createCourse(course: CreateCourseDto){
-    return this.http.post<Course>(`${this.baseUrl}/create-course`, course, { headers: { Authorization: this.authorization } });
+    return this.http.post<Course>(`${this.baseUrl}/create-course`, course, { 
+      headers: this.getAuthHeaders() 
+    });
   }
 
   createLesson(lesson: CreateLessonDto){
-    return this.http.post<Lesson>(`${this.baseUrl}/create-lesson`, lesson, { headers: { Authorization: this.authorization } });
+    return this.http.post<Lesson>(`${this.baseUrl}/create-lesson`, lesson, { 
+      headers: this.getAuthHeaders() 
+    });
   }
 
   getAllCourses(): Observable<Course[]> {
@@ -35,7 +41,9 @@ export class CourseService {
   }
 
   getAllLessons(): Observable<Lesson[]> {
-    return this.http.get<Lesson[]>(`${this.baseUrl}/all-lessons`, { headers: { Authorization: this.authorization } });
+    return this.http.get<Lesson[]>(`${this.baseUrl}/all-lessons`, { 
+      headers: this.getAuthHeaders() 
+    });
   }
 
   getCourseWithLessons(id: number): Observable<CourseWithLessons> {
@@ -43,16 +51,16 @@ export class CourseService {
   }
 
   getMyProgress(): Observable<ProgressModel[]> {
-    return this.http.get<ProgressModel[]>(`${this.baseUrl}/my-progress`,
-      {headers: { Authorization: this.authorization }}
-    );
+    return this.http.get<ProgressModel[]>(`${this.baseUrl}/my-progress`, {
+      headers: this.getAuthHeaders()
+    });
   }
 
   completeLesson(courseId: number, lessonId: number): Observable<CompletedLessonResponse> {
-    return this.http
-    .get<CompletedLessonResponse>
-    (`${this.baseUrl}/complete-lesson/${courseId}/${lessonId}`,
-      { headers: { Authorization: this.authorization } }
+    return this.http.get<CompletedLessonResponse>(
+      `${this.baseUrl}/complete-lesson/${courseId}/${lessonId}`, {
+        headers: this.getAuthHeaders()
+      }
     );
   }
 }
