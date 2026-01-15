@@ -30,3 +30,30 @@ body {
   background-attachment: fixed;
   min-height: 100vh;
 }
+
+.btn-navy {
+  background-color: #002147 !important; /* Navy Blue */
+  color: #ffffff !important;
+  border-color: #002147 !important;
+  opacity: 1 !important; /* Ensure visibility */
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #00152e !important; /* Darker Navy */
+    border-color: #00152e !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  &:focus, &:active {
+    background-color: #001024 !important;
+    border-color: #001024 !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 33, 71, 0.5);
+  }
+  
+  &:disabled {
+      background-color: #3b4d61 !important;
+      border-color: #3b4d61 !important;
+      opacity: 1 !important; /* Avoid transparency on disabled */
+  }
+}

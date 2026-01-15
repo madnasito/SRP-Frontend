@@ -1,0 +1,108 @@
+@import '../../../styles.scss';
+
+// Color Variables
+$navy-blue: #002147;
+$old-rose: #d69ca0; // Dusty/Old Rose Pastel
+$old-rose-light: rgba(214, 156, 160, 0.15);
+
+.faq-container {
+  max-width: 900px;
+}
+
+.text-navy-blue {
+  color: #fff !important; 
+}
+
+// Accent text for titles or highlights
+.text-rose {
+  color: $old-rose !important;
+}
+
+.text-muted {
+    color: #cecfd1 !important; // Slightly brighter than standard muted for dark bg
+}
+
+// Target the lead paragraph directly if needed, or use a class in HTML
+.lead {
+  color: $old-rose !important;
+  font-weight: 500;
+}
+
+h2.border-bottom {
+  border-bottom-color: $old-rose !important; // Underline sections with Rose
+}
+
+.accordion-item {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 33, 71, 0.85); // Slightly more opaque
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); // Deeper shadow
+  border-radius: 12px !important;
+  overflow: hidden;
+
+  .accordion-button {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #e0e0e0;
+    border: none;
+    box-shadow: none;
+    padding: 1.25rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+
+    // Hover state
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+        color: $old-rose; // Highlight text on hover
+    }
+
+    // Expanded State
+    &:not(.collapsed) {
+      color: $old-rose; // Active Title Color
+      background-color: $old-rose-light; // Subtle Rose background
+      font-weight: 600;
+      box-shadow: inset 0 -1px 0 rgba(214, 156, 160, 0.3); // Rose separator
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    // Icon Styles
+    &::after {
+      background-size: 1.25rem;
+      filter: invert(1); 
+      transition: transform 0.3s ease;
+    }
+    
+    // Icon when expanded
+    &:not(.collapsed)::after {
+       // Filter to match the Rose color roughly
+       // Or just keep white/invert but maybe add a glow
+       filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(0.9) contrast(1.2); 
+    }
+
+    &:focus {
+      box-shadow: none;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .accordion-collapse {
+      background-color: transparent; 
+      border-radius: 0 0 12px 12px;
+  }
+
+  .accordion-body {
+    padding: 1.5rem;
+    color: #d1d1d1;
+    line-height: 1.6;
+    background-color: transparent;
+    border-top: 1px solid rgba(255,255,255,0.05); // Subtle top border inside
+  }
+}
+
+@media (max-width: 576px) {
+    .faq-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

@@ -1,1 +1,72 @@
-<p>ask works!</p>
+<div class="ask-container container-fluid min-vh-100 d-flex align-items-center justify-content-center py-5">
+  <div class="card shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp">
+    <div class="card-body p-4 p-md-5">
+      <div class="text-center mb-4">
+        <h1 class="display-6 fw-bold text-navy-blue mb-2">¿Tienes alguna pregunta?</h1>
+        <p class="text-rose lead mb-0">Estamos aquí para escucharte y guiarte.</p>
+      </div>
+
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label for="email" class="form-label text-muted small fw-semibold">CORREO ELECTRÓNICO</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0 text-navy-blue">
+              <i class="bi bi-envelope"></i>
+            </span>
+            <input 
+              type="email" 
+              class="form-control bg-light border-start-0 ps-0" 
+              id="email" 
+              formControlName="email" 
+              placeholder="tu@correo.com"
+            >
+          </div>
+          <div *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched" class="text-danger small mt-1">
+            Por favor ingresa un correo válido.
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="content" class="form-label text-muted small fw-semibold">TU MENSAJE</label>
+          <textarea 
+            class="form-control bg-light" 
+            id="content" 
+            formControlName="content" 
+            rows="5" 
+            placeholder="Escribe aquí tu duda o comentario..."
+          ></textarea>
+          <div *ngIf="contactForm.get('content')?.invalid && contactForm.get('content')?.touched" class="text-danger small mt-1">
+            El mensaje es requerido.
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button 
+            type="submit" 
+            class="btn btn-navy btn-lg rounded-pill fw-bold"
+            [disabled]="contactForm.invalid"
+          >
+            ENVIAR MENSAJE
+            <i class="bi bi-send-fill ms-2"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #dangerTpl>
+  <span class="d-flex align-items-center gap-2">
+    <i class="bi bi-exclamation-circle-fill"></i>
+    {{ errorMessage }}
+  </span>
+</ng-template>
+
+<ng-template #successTpl>
+  <span class="d-flex align-items-center gap-2">
+    <i class="bi bi-check-circle-fill"></i>
+    ¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.
+  </span>
+</ng-template>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
