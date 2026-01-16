@@ -5,6 +5,7 @@ import { CourseService } from '../../core/services/course/course-service';
 import { CourseWithLessons } from '../../core/interfaces/course/course-with-lessons.interface';
 import { AuthService } from '../../core/services/auth/auth';
 import { ToastService } from '../../shared/services/toast.service';
+import { environment } from '../../../environments/environment.debug';
 
 @Component({
   selector: 'app-course',
@@ -41,7 +42,13 @@ export class Course implements OnInit {
   loadCourse(): void {
     this.courseService.getCourseWithLessons(this.courseId).subscribe({
       next: (course) => {
-        this.course = course;
+        let url = course.imageUrl;
+        if (url && !url.startsWith('http')) {
+          const apiBase = environment.apiUrl.endsWith('/') ? environment.apiUrl.slice(0, -1) : environment.apiUrl;
+          const imagePath = url.startsWith('/') ? url : `/${url}`;
+          url = `${apiBase}${imagePath}`;
+        }
+        this.course = { ...course, imageUrl: url };
         this.loading = false;
         this.cdr.detectChanges();
       },

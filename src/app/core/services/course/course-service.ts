@@ -33,7 +33,7 @@ export class CourseService {
     };
   }
 
-  createCourse(course: CreateCourseDto){
+  createCourse(course: any){
     const headers = this.getAuthHeaders();
     return this.http.post<Course>(`${this.baseUrl}/create-course`, course, 
       headers ? { headers } : {}
@@ -91,7 +91,7 @@ export class CourseService {
     );
   }
 
-  editCourse(course: EditCourseDto): Observable<Course> {
+  editCourse(course: any): Observable<Course> {
     const headers = this.getAuthHeaders();
     return this.http.patch<Course>(`${this.baseUrl}/edit-course`, course, 
       headers ? { headers } : {}

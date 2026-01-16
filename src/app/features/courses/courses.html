@@ -82,8 +82,11 @@
                 <textarea class="form-control bg-dark text-white border-secondary" formControlName="description" rows="3" placeholder="Describe brevemente el curso..."></textarea>
               </div>
               <div class="mb-3">
-                <label class="form-label small text-secondary">URL de la Imagen (Vertical/Portrait)</label>
-                <input type="text" class="form-control bg-dark text-white border-secondary" formControlName="imageUrl" placeholder="https://ejemplo.com/imagen.jpg">
+                <label class="form-label small text-secondary">Imagen del Curso (Vertical/Portrait)</label>
+                <input type="file" class="form-control bg-dark text-white border-secondary" (change)="onFileSelected($event)" accept="image/*">
+                <div class="mt-2" *ngIf="selectedFile">
+                  <span class="badge bg-secondary">Archivo seleccionado: {{ selectedFile.name }}</span>
+                </div>
               </div>
               <div class="d-grid mt-4">
                 <button type="submit" class="btn btn-navy py-2" [disabled]="courseForm.invalid">

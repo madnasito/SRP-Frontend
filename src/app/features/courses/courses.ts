@@ -8,6 +8,7 @@ import { CreateLessonDto } from '../../core/interfaces/course/create-lesson.dto'
 import { CourseWithLessons } from '../../core/interfaces/course/course-with-lessons.interface';
 import { Lesson } from '../../core/interfaces/course/lesson.interface';
 import { ToastService } from '../../shared/services/toast.service';
+import { environment } from '../../../environments/environment.debug';
 
 @Component({
   selector: 'app-courses',
@@ -28,6 +29,7 @@ export class Courses implements OnInit {
   loading = true;
   errorMessage = '';
   successMessage = '';
+  apiUrl = environment.apiUrl;
 
   // Modals state
   showCourseModal = false;
@@ -38,6 +40,7 @@ export class Courses implements OnInit {
   // Current states
   selectedCourse: CourseWithLessons | null = null;
   currentCourseId: number | null = null;
+  selectedFile: File | null = null;
 
   // Forms
   courseForm: FormGroup;
@@ -48,7 +51,6 @@ export class Courses implements OnInit {
       id: [null],
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      imageUrl: ['', [Validators.required]],
     });
 
     this.lessonForm = this.fb.group({
@@ -66,7 +68,15 @@ export class Courses implements OnInit {
     this.loading = true;
     this.courseService.getAllCourses().subscribe({
       next: (data) => {
-        this.courses = data;
+        this.courses = data.map(c => {
+          let url = c.imageUrl;
+          if (url && !url.startsWith('http')) {
+            const apiBase = this.apiUrl.endsWith('/') ? this.apiUrl.slice(0, -1) : this.apiUrl;
+            const imagePath = url.startsWith('/') ? url : `/${url}`;
+            url = `${apiBase}${imagePath}`;
+          }
+          return { ...c, imageUrl: url };
+        });
         this.loading = false;
         this.cdr.detectChanges();
       },
@@ -83,17 +93,18 @@ export class Courses implements OnInit {
   openCreateCourseModal(): void {
     this.isEditingCourse = false;
     this.courseForm.reset();
+    this.selectedFile = null;
     this.showCourseModal = true;
     this.cdr.detectChanges();
   }
 
   openEditCourseModal(course: Course): void {
     this.isEditingCourse = true;
+    this.selectedFile = null;
     this.courseForm.patchValue({
       id: course.id,
       title: course.title,
-      description: course.description,
-      imageUrl: course.imageUrl
+      description: course.description
     });
     this.showCourseModal = true;
     this.cdr.detectChanges();
@@ -104,12 +115,27 @@ export class Courses implements OnInit {
     this.cdr.detectChanges();
   }
 
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
   saveCourse(): void {
     if (this.courseForm.invalid) return;
 
+    const formData = new FormData();
+    formData.append('title', this.courseForm.get('title')?.value);
+    formData.append('description', this.courseForm.get('description')?.value);
+    
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+
     if (this.isEditingCourse) {
-      const editDto: EditCourseDto = this.courseForm.value;
-      this.courseService.editCourse(editDto).subscribe({
+      formData.append('id', this.courseForm.get('id')?.value);
+      this.courseService.editCourse(formData).subscribe({
         next: () => {
           this.showSuccess('Curso actualizado con éxito');
           this.loadCourses();
@@ -118,8 +144,11 @@ export class Courses implements OnInit {
         error: (err) => this.showError('Error al actualizar el curso')
       });
     } else {
-      const createDto: CreateCourseDto = this.courseForm.value;
-      this.courseService.createCourse(createDto).subscribe({
+      if (!this.selectedFile) {
+        this.showError('La imagen es obligatoria para nuevos cursos');
+        return;
+      }
+      this.courseService.createCourse(formData).subscribe({
         next: () => {
           this.showSuccess('Curso creado con éxito');
           this.loadCourses();
