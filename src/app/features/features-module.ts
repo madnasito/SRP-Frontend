@@ -8,19 +8,22 @@ import { Ask } from './ask/ask';
 import { Login } from './login/login';
 import { Register } from './register/register';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { ToastsContainer } from '../shared/atoms/atom-toast-container';
 import { Course } from './course/course';
 import { Courses } from './courses/courses';
 import { Messages } from './messages/messages';
+import { Users } from './users/users';
 
 
 @NgModule({
   declarations: [
-    Home, Faq, MyProgress, Profile, Ask, Login, Register, Course, Courses, Messages
+    Home, Faq, MyProgress, Profile, Ask, Login, Register, Course, Courses, Messages, Users
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     ToastsContainer
   ]
 })

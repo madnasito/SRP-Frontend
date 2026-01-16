@@ -55,17 +55,7 @@ export class AuthService {
   }
 
   register(registerDto: RegisterDto): Observable<RegisterResp> {
-    return this.http.post<RegisterResp>(`${this.baseUrl}/sign-up`, registerDto).pipe(
-      tap((response: RegisterResp) => {
-        // Save token and user to localStorage
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
-        
-        // Update state
-        this.currentUserSubject.next(response.user);
-        this.isAuthenticatedSubject.next(true);
-      })
-    );
+    return this.http.post<RegisterResp>(`${this.baseUrl}/sign-up`, registerDto);
   }
 
   logout(): void {

@@ -41,4 +41,11 @@ export class UserService {
       headers ? { headers } : {}
     );
   }
+
+  getAllUsers(): Observable<UserDto[]> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<UserDto[]>(`${this.baseUrl}/all`, 
+      headers ? { headers } : {}
+    );
+  }
 }

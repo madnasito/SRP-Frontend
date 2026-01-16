@@ -15,6 +15,12 @@
           <li class="nav-item" *ngIf="isAdmin">
             <a class="nav-link fs-5 text-white" routerLink="/messages" routerLinkActive="active">Mensajes</a>
           </li>
+          <li class="nav-item" *ngIf="isAdmin">
+            <a class="nav-link fs-5 text-white" routerLink="/users" routerLinkActive="active">Usuarios</a>
+          </li>
+          <li class="nav-item" *ngIf="isAdmin">
+            <a class="nav-link fs-5 text-white" routerLink="/register" routerLinkActive="active">Registrar Usuario</a>
+          </li>
           <li class="nav-item" *ngIf="!isAdmin">
             <a class="nav-link fs-5 text-white" routerLink="/ask" routerLinkActive="active">Preguntar</a>
           </li>
@@ -26,9 +32,6 @@
           <ng-container *ngIf="!isAuthenticated">
             <li class="nav-item">
               <a class="nav-link fs-5 text-white" routerLink="/login" routerLinkActive="active">Iniciar Sesión</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fs-5 text-white" routerLink="/register" routerLinkActive="active">Registrarse</a>
             </li>
           </ng-container>
 

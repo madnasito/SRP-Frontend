@@ -9,6 +9,7 @@ import { MyProgress } from './features/my-progress/my-progress';
 import { Course } from './features/course/course';
 import { Courses } from './features/courses/courses';
 import { Messages } from './features/messages/messages';
+import { Users } from './features/users/users';
 
 export const routes: Routes = [
     {
@@ -50,5 +51,9 @@ export const routes: Routes = [
     {
         path: 'messages',
         component: Messages
+    },
+    {
+        path: 'users',
+        component: Users
     }
 ];

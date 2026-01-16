@@ -18,7 +18,9 @@ export class Register {
   private readonly toastService = inject(ToastService);
 
   public errorMessage: string = '';
+  public successMessage: string = '';
   @ViewChild('dangerTpl') dangerTpl!: TemplateRef<any>;
+  @ViewChild('successTpl') successTpl!: TemplateRef<any>;
 
   registerForm = this.formBuilder.group({
     name: ['', [Validators.required]],
@@ -36,7 +38,9 @@ export class Register {
       const registerDto = this.registerForm.value as RegisterDto;
       this.authService.register(registerDto).subscribe({
         next: (response: RegisterResp ) => {
-          this.router.navigate(['/']);
+          this.successMessage = `Usuario ${response.user.name} registrado con éxito`;
+          this.showSuccess(this.successTpl);
+          this.registerForm.reset();
         },
         error: (error: any) => {
           if(error.statusText) {
@@ -49,6 +53,10 @@ export class Register {
   }
 
   showDanger(template: TemplateRef<any>) {
-		this.toastService.show({ template, classname: 'bg-danger text-light', delay: 15000 });
+		this.toastService.show({ template, classname: 'bg-danger text-light', delay: 5000 });
+	}
+
+  showSuccess(template: TemplateRef<any>) {
+		this.toastService.show({ template, classname: 'bg-success text-light', delay: 5000 });
 	}
 }
