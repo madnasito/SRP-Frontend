@@ -15,12 +15,14 @@ export class Home implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   
   courses: Course[] = [];
+  chunkedCourses: Course[][] = [];
   loading = true;
 
   ngOnInit(): void {
     this.courseService.getAllCourses().subscribe({
       next: (courses) => {
         this.courses = courses.filter(c => c.active);
+        this.chunkedCourses = this.chunkArray(this.courses, 3);
         this.loading = false;
         this.cdr.detectChanges();
       },
@@ -33,5 +35,13 @@ export class Home implements OnInit {
 
   navigateToCourse(courseId: number): void {
     this.router.navigate(['/course', courseId]);
+  }
+
+  private chunkArray(array: any[], size: number): any[][] {
+    const result = [];
+    for (let i = 0; i < array.length; i += size) {
+      result.push(array.slice(i, i + size));
+    }
+    return result;
   }
 }
