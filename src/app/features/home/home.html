@@ -1,67 +1,143 @@
-<div class="home-container container-fluid min-vh-100 py-5">
-  <div class="content-wrapper">
-    <div class="text-center mb-5">
-      <h1 class="display-4 fw-bold text-white mb-3">Academia SRP</h1>
-      <p class="lead text-rose">Descubre nuestros cursos de transformación</p>
-    </div>
-
-    <div *ngIf="loading" class="text-center">
-      <div class="spinner-border text-rose" role="status">
-        <span class="visually-hidden">Cargando...</span>
+<div class="home-container container-fluid min-vh-100 py-0">
+  
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container py-5">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5 order-lg-2">
+          <div class="hero-image-container ms-lg-auto">
+            <img src="/images/sra.jpeg" alt="Oskelly Medina" class="hero-image img-fluid rounded-4 shadow-lg border border-rose">
+          </div>
+        </div>
+        <div class="col-lg-7 order-lg-1">
+          <div class="hero-text-content">
+            <h2 class="name-display mb-2">Oskelly Medina</h2>
+            <h1 class="impact-text mb-4">"Te ayudo a sanar tus heridas para activar tu propósito financiero"</h1>
+            <div class="hero-cta">
+              <a href="#courses" class="btn btn-navy btn-lg rounded-pill px-4 py-3">
+                <i class="bi bi-mortarboard-fill me-2"></i>Ver Cursos
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div *ngIf="!loading && courses.length === 0" class="text-center text-white">
-      <p class="lead">No hay cursos disponibles en este momento.</p>
-    </div>
-
-    <div *ngIf="!loading && courses.length > 0" class="carousel-container">
-      <div id="coursesCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button 
-            *ngFor="let course of courses; let i = index" 
-            type="button" 
-            [attr.data-bs-target]="'#coursesCarousel'" 
-            [attr.data-bs-slide-to]="i" 
-            [class.active]="i === 0"
-            [attr.aria-current]="i === 0 ? 'true' : null"
-            [attr.aria-label]="'Slide ' + (i + 1)"
-          ></button>
+  <!-- Pillars Section -->
+  <section class="pillars-section py-5 bg-dark-layer">
+    <div class="container py-4">
+      <div class="row g-4">
+        <!-- Misión -->
+        <div class="col-md-4">
+          <div class="pillar-card p-4 rounded-4 border border-secondary h-100">
+            <div class="pillar-icon mb-3">
+              <i class="bi bi-bullseye fs-1 text-gold"></i>
+            </div>
+            <h3 class="pillar-title text-rose mb-3">Misión</h3>
+            <p class="pillar-text text-light small opacity-75">
+              “Nuestra misión es activar el propósito de la mujer de fe a través del método SRP (Sana, Reconcíliate y Produce). Ayudamos a mujeres que se sienten paralizadas por sus heridas emocionales a sanar de raíz, recuperar su identidad en Cristo y transformar esa sanidad en un negocio digital rentable, escalable y con propósito eterno.”
+            </p>
+          </div>
         </div>
+        <!-- Visión -->
+        <div class="col-md-4">
+          <div class="pillar-card p-4 rounded-4 border border-secondary h-100">
+            <div class="pillar-icon mb-3">
+              <i class="bi bi-eye fs-1 text-gold"></i>
+            </div>
+            <h3 class="pillar-title text-rose mb-3">Visión</h3>
+            <p class="pillar-text text-light small opacity-75">
+              “Ser la academia referente a nivel global en la formación de Mujeres de Blindaje; una comunidad de empresarias espirituales que gobiernan sus emociones, lideran sus hogares bajo el orden divino y manifiestan la riqueza del Reino de Dios en el mundo digital.”
+            </p>
+          </div>
+        </div>
+        <!-- Valores -->
+        <div class="col-md-4">
+          <div class="pillar-card p-4 rounded-4 border border-secondary h-100">
+            <div class="pillar-icon mb-3">
+              <i class="bi bi-star-fill fs-1 text-gold"></i>
+            </div>
+            <h3 class="pillar-title text-rose mb-3">Nuestros Valores</h3>
+            <ul class="list-unstyled text-light small opacity-75">
+              <li class="mb-2"><strong>Cristocentrismo:</strong> Jesucristo es el Capitán que guía cada una de nuestras estrategias.</li>
+              <li class="mb-2"><strong>Sanidad con Propósito:</strong> No sanamos solo para sentirnos bien, sino para estar listas para producir.</li>
+              <li class="mb-2"><strong>Excelencia Digital:</strong> Creemos que el mensaje del Reino merece la mejor ejecución estratégica (R3F).</li>
+              <li><strong>Libertad Financiera:</strong> Rompemos techos de escasez para convertir el llamado de cada mujer en un legado generacional.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="carousel-inner">
-          <div 
-            *ngFor="let course of courses; let i = index" 
-            class="carousel-item" 
-            [class.active]="i === 0"
-          >
-            <div class="course-card" (click)="navigateToCourse(course.id)">
-              <div class="course-image-container">
-                <img 
-                  [src]="course.imageUrl" 
-                  [alt]="course.title"
-                  class="course-image"
-                >
-                <div class="course-overlay">
-                  <h3 class="course-title">{{ course.title }}</h3>
-                  <button class="btn btn-navy btn-lg mt-3">
-                    <i class="bi bi-play-circle me-2"></i>Ver Curso
-                  </button>
+  <!-- Courses Section (Carousel) -->
+  <section id="courses" class="courses-section py-5">
+    <div class="content-wrapper">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold text-white mb-3">Nuestra Academia</h2>
+        <p class="lead text-rose">Transformación real a través de nuestros programas</p>
+      </div>
+
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border text-rose" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading && courses.length === 0" class="text-center text-white">
+        <p class="lead">No hay cursos disponibles en este momento.</p>
+      </div>
+
+      <div *ngIf="!loading && courses.length > 0" class="carousel-container pb-5">
+        <div id="coursesCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button 
+              *ngFor="let course of courses; let i = index" 
+              type="button" 
+              [attr.data-bs-target]="'#coursesCarousel'" 
+              [attr.data-bs-slide-to]="i" 
+              [class.active]="i === 0"
+              [attr.aria-current]="i === 0 ? 'true' : null"
+              [attr.aria-label]="'Slide ' + (i + 1)"
+            ></button>
+          </div>
+
+          <div class="carousel-inner">
+            <div 
+              *ngFor="let course of courses; let i = index" 
+              class="carousel-item" 
+              [class.active]="i === 0"
+            >
+              <div class="course-card" (click)="navigateToCourse(course.id)">
+                <div class="course-image-container">
+                  <img 
+                    [src]="course.imageUrl" 
+                    [alt]="course.title"
+                    class="course-image"
+                  >
+                  <div class="course-overlay">
+                    <h3 class="course-title">{{ course.title }}</h3>
+                    <button class="btn btn-navy px-4 mt-3">
+                      <i class="bi bi-play-circle me-2"></i>Ver Curso
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#coursesCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#coursesCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Siguiente</span>
-        </button>
+          <button class="carousel-control-prev" type="button" data-bs-target="#coursesCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#coursesCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
+
