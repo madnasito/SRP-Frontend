@@ -40,7 +40,6 @@ export class Courses implements OnInit {
   // Current states
   selectedCourse: CourseWithLessons | null = null;
   currentCourseId: number | null = null;
-  selectedFile: File | null = null;
 
   // Forms
   courseForm: FormGroup;
@@ -51,6 +50,7 @@ export class Courses implements OnInit {
       id: [null],
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      imageUrl: ['', [Validators.required]],
     });
 
     this.lessonForm = this.fb.group({
@@ -93,18 +93,17 @@ export class Courses implements OnInit {
   openCreateCourseModal(): void {
     this.isEditingCourse = false;
     this.courseForm.reset();
-    this.selectedFile = null;
     this.showCourseModal = true;
     this.cdr.detectChanges();
   }
 
   openEditCourseModal(course: Course): void {
     this.isEditingCourse = true;
-    this.selectedFile = null;
     this.courseForm.patchValue({
       id: course.id,
       title: course.title,
-      description: course.description
+      description: course.description,
+      imageUrl: course.imageUrl
     });
     this.showCourseModal = true;
     this.cdr.detectChanges();
@@ -115,27 +114,15 @@ export class Courses implements OnInit {
     this.cdr.detectChanges();
   }
 
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
-    }
-  }
+
 
   saveCourse(): void {
     if (this.courseForm.invalid) return;
 
-    const formData = new FormData();
-    formData.append('title', this.courseForm.get('title')?.value);
-    formData.append('description', this.courseForm.get('description')?.value);
-    
-    if (this.selectedFile) {
-      formData.append('image', this.selectedFile);
-    }
+    const courseData = this.courseForm.value;
 
     if (this.isEditingCourse) {
-      formData.append('id', this.courseForm.get('id')?.value);
-      this.courseService.editCourse(formData).subscribe({
+      this.courseService.editCourse(courseData).subscribe({
         next: () => {
           this.showSuccess('Curso actualizado con éxito');
           this.loadCourses();
@@ -144,11 +131,7 @@ export class Courses implements OnInit {
         error: (err) => this.showError('Error al actualizar el curso')
       });
     } else {
-      if (!this.selectedFile) {
-        this.showError('La imagen es obligatoria para nuevos cursos');
-        return;
-      }
-      this.courseService.createCourse(formData).subscribe({
+      this.courseService.createCourse(courseData).subscribe({
         next: () => {
           this.showSuccess('Curso creado con éxito');
           this.loadCourses();
