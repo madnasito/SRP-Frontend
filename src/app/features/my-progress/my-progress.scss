@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Variables
 $old-rose: #d69ca0;
 $navy-blue: #002147;
@@ -81,7 +83,7 @@ $navy-blue: #002147;
   overflow: hidden;
 
   .progress-bar {
-    background: linear-gradient(90deg, $old-rose 0%, lighten($old-rose, 10%) 100%);
+    background: linear-gradient(90deg, $old-rose 0%, color.adjust($old-rose, $lightness: 10%) 100%);
     box-shadow: 0 0 10px rgba($old-rose, 0.3);
   }
 }

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Variables
 $old-rose: #d69ca0;
 $navy-blue: #002147;
@@ -19,7 +21,7 @@ $navy-blue: #002147;
 .course-banner {
   width: auto;
   max-width: 100%;
-  max-height: 450px; 
+  max-height: 450px;
   object-fit: contain; // Changed from cover to show full image without zoom/crop
   display: block;
   margin: 0 auto;
@@ -60,7 +62,7 @@ $navy-blue: #002147;
   }
 
   .lesson-number {
-    background: linear-gradient(135deg, $old-rose 0%, darken($old-rose, 10%) 100%);
+    background: linear-gradient(135deg, $old-rose 0%, color.adjust($old-rose, $lightness: -10%) 100%);
     color: #fff;
     padding: 0.75rem 1.5rem;
     font-weight: bold;
@@ -94,7 +96,7 @@ $navy-blue: #002147;
   .btn-navy {
     margin-top: auto;
     transition: all 0.3s ease;
-    
+
     &:hover {
       background-color: $old-rose !important;
       border-color: $old-rose !important;
@@ -125,7 +127,7 @@ $navy-blue: #002147;
   border-radius: 50%;
   opacity: 1;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background-color: $old-rose;
     transform: rotate(90deg);
@@ -154,4 +156,3 @@ $navy-blue: #002147;
     max-width: calc(100% - 1rem);
   }
 }
-

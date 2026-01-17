@@ -5,15 +5,15 @@
         <h1 class="display-5 fw-bold text-white mb-2">Gestión de Usuarios</h1>
         <p class="lead text-rose mb-0">Listado completo de miembros de la academia</p>
       </div>
-      <!-- <a routerLink="/register" class="btn btn-navy d-flex align-items-center">
+      <a routerLink="/register" class="btn btn-navy d-flex align-items-center text-decoration-none">
         <i class="bi bi-person-plus-fill me-2 fs-5"></i> Registrar Nuevo
-      </a> -->
+      </a>
     </div>
 
     <!-- Loading State -->
     <div *ngIf="loading" class="text-center py-5">
       <div class="spinner-border text-rose" role="status">
-        <span class="visually-hidden">Cargando...</span>
+        <span class="visually-hidden">Cargando......</span>
       </div>
       <p class="text-white mt-3">Cargando base de datos de usuarios...</p>
     </div>
@@ -35,7 +35,7 @@
               <th scope="col">Correo Electrónico</th>
               <th scope="col" class="text-center">Rol</th>
               <th scope="col" class="text-center">Estado</th>
-              <th scope="col" class="text-end pe-4">Contraseña</th>
+              <th scope="col" class="text-end pe-4">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -59,7 +59,9 @@
                 <span class="text-white-50 small ms-2">{{ user.active ? 'Activo' : 'Inactivo' }}</span>
               </td>
               <td class="text-end pe-4">
-                <code class="text-rose">{{ user.password }}</code>
+                <button class="btn btn-sm btn-outline-rose rounded-pill px-3" (click)="openPasswordModal(user)">
+                  <i class="bi bi-key-fill me-1"></i> Contraseña
+                </button>
               </td>
             </tr>
           </tbody>
@@ -67,8 +69,69 @@
       </div>
     </div>
 
+    <!-- Password Update Modal -->
+    <div class="modal fade show" [class.d-block]="showPasswordModal" *ngIf="showPasswordModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-card border-secondary text-white shadow-lg">
+          <div class="modal-header border-secondary p-4">
+            <h5 class="modal-title fw-bold text-rose">
+              <i class="bi bi-shield-lock me-2"></i>Actualizar Contraseña
+            </h5>
+            <button type="button" class="btn-close btn-close-white" (click)="closePasswordModal()"></button>
+          </div>
+          <div class="modal-body p-4">
+            <p class="text-white-50 small mb-4">
+              Estás actualizando la contraseña de <strong>{{ selectedUser?.name }}</strong>.
+            </p>
+            <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+              <div class="mb-3">
+                <label class="form-label small text-secondary">Nueva Contraseña</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-dark border-secondary text-secondary">
+                    <i class="bi bi-key"></i>
+                  </span>
+                  <input 
+                    type="password" 
+                    class="form-control bg-dark text-white border-secondary" 
+                    formControlName="password" 
+                    placeholder="Mínimo 6 caracteres"
+                  >
+                </div>
+                <div *ngIf="passwordForm.get('password')?.touched && passwordForm.get('password')?.invalid" class="text-danger small mt-1">
+                  La contraseña debe tener al menos 6 caracteres.
+                </div>
+              </div>
+              <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-navy py-2" [disabled]="passwordForm.invalid">
+                  Confirmar Cambio
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade show" *ngIf="showPasswordModal" (click)="closePasswordModal()"></div>
+
     <div class="mt-4 text-white-50 small">
       <i class="bi bi-info-circle me-1"></i> Total de usuarios registrados: {{ users.length }}
     </div>
   </div>
 </div>
+
+<!-- Toast Templates -->
+<ng-template #dangerTpl>
+  <div class="d-flex align-items-center">
+    <i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+    <span>{{ errorMessage }}</span>
+  </div>
+</ng-template>
+
+<ng-template #successTpl>
+  <div class="d-flex align-items-center">
+    <i class="bi bi-check-circle-fill me-2 fs-4"></i>
+    <span>{{ successMessage }}</span>
+  </div>
+</ng-template>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $old-rose: #d69ca0;
 $navy-blue: #002147;
 
@@ -21,7 +23,7 @@ $navy-blue: #002147;
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: lighten($navy-blue, 5%);
+    background-color: color.adjust($navy-blue, $lightness: 5%);
     border-color: $old-rose;
     color: white;
     transform: translateY(-2px);

@@ -6,6 +6,7 @@ import { UpdateUserDto } from '../../interfaces/user/update-user.dto';
 import { UpdatePasswordDto } from '../../interfaces/user/update-password.dto';
 import { UserDto } from '../../interfaces/user/user.dto';
 import { Observable } from 'rxjs';
+import { UpdateUserPasswordDto } from '../../interfaces/user/update-user-password.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,13 @@ export class UserService {
   updatePassword(updatePasswordDto: UpdatePasswordDto): Observable<UserDto>{
     const headers = this.getAuthHeaders();
     return this.http.patch<UserDto>(`${this.baseUrl}/update-password`, updatePasswordDto, 
+      headers ? { headers } : {}
+    );
+  }
+
+  updateUserPassword(payload: UpdateUserPasswordDto): Observable<UserDto> {
+    const headers = this.getAuthHeaders();
+    return this.http.patch<UserDto>(`${this.baseUrl}/admin-update-password`, payload, 
       headers ? { headers } : {}
     );
   }

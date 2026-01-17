@@ -1,47 +1,72 @@
 <header>
-  <nav class="navbar navbar-expand-lg shadow-sm py-2" style="background-color: rgba(33, 37, 41, 0.45); backdrop-filter: blur(5px);">
+  <nav
+    class="navbar navbar-expand-lg shadow-sm py-2"
+    style="background-color: rgba(33, 37, 41, 0.45); backdrop-filter: blur(5px)"
+  >
     <div class="container-fluid">
       <a class="navbar-brand" routerLink="/">
-        <img src="/images/academia.jpg" alt="Academia SRP" height="40">
+        <img src="/images/academia.jpg" alt="Academia SRP" height="40" />
       </a>
-      <button class="navbar-toggler navbar-dark border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <button
+        class="navbar-toggler navbar-dark border-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarContent"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-family: 'Montserrat', sans-serif;">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-family: 'Montserrat', sans-serif">
           <li class="nav-item" *ngIf="isAdmin">
-            <a class="nav-link fs-5 text-white" routerLink="/courses" routerLinkActive="active">Cursos</a>
+            <a class="nav-link fs-5 text-white" routerLink="/courses" routerLinkActive="active"
+              >Cursos</a
+            >
           </li>
           <li class="nav-item" *ngIf="isAdmin">
-            <a class="nav-link fs-5 text-white" routerLink="/messages" routerLinkActive="active">Mensajes</a>
+            <a class="nav-link fs-5 text-white" routerLink="/messages" routerLinkActive="active"
+              >Mensajes</a
+            >
           </li>
           <li class="nav-item" *ngIf="isAdmin">
-            <a class="nav-link fs-5 text-white" routerLink="/users" routerLinkActive="active">Usuarios</a>
+            <a class="nav-link fs-5 text-white" routerLink="/users" routerLinkActive="active"
+              >Usuarios</a
+            >
           </li>
-          <li class="nav-item" *ngIf="isAdmin">
-            <a class="nav-link fs-5 text-white" routerLink="/register" routerLinkActive="active">Registrar Usuario</a>
+
+          <li class="nav-item" *ngIf="!isAdmin">
+            <a class="nav-link fs-5 text-white" routerLink="/ask" routerLinkActive="active"
+              >Preguntar</a
+            >
           </li>
           <li class="nav-item" *ngIf="!isAdmin">
-            <a class="nav-link fs-5 text-white" routerLink="/ask" routerLinkActive="active">Preguntar</a>
+            <a class="nav-link fs-5 text-white" routerLink="/faq" routerLinkActive="active"
+              >Preguntas Frecuentes</a
+            >
           </li>
-          <li class="nav-item" *ngIf="!isAdmin">
-            <a class="nav-link fs-5 text-white" routerLink="/faq" routerLinkActive="active">Preguntas Frecuentes</a>
-          </li>
-          
+
           <!-- Guest Navigation -->
           <ng-container *ngIf="!isAuthenticated">
             <li class="nav-item">
-              <a class="nav-link fs-5 text-white" routerLink="/login" routerLinkActive="active">Iniciar Sesión</a>
+              <a class="nav-link fs-5 text-white" routerLink="/login" routerLinkActive="active"
+                >Iniciar Sesión</a
+              >
             </li>
           </ng-container>
 
           <!-- Authenticated Navigation -->
           <ng-container *ngIf="isAuthenticated">
             <li class="nav-item">
-              <a class="nav-link fs-5 text-white" routerLink="/my-progress" routerLinkActive="active">Mi Progreso</a>
+              <a
+                class="nav-link fs-5 text-white"
+                routerLink="/my-progress"
+                routerLinkActive="active"
+                >Mi Progreso</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link fs-5 text-white" routerLink="/profile" routerLinkActive="active">Perfil</a>
+              <a class="nav-link fs-5 text-white" routerLink="/profile" routerLinkActive="active"
+                >Perfil</a
+              >
             </li>
             <li class="nav-item">
               <button class="btn btn-link nav-link fs-5 text-white" (click)="logout()">

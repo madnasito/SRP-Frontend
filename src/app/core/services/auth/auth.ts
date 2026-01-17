@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../../environments/environment.debug';
 import { HttpClient } from '@angular/common/http';
 import { LoginDto } from '../../interfaces/auth/login.interface';
@@ -7,6 +7,7 @@ import { RegisterResp } from '../../interfaces/auth/register-resp.interface';
 import { RegisterDto } from '../../interfaces/auth/register.dto';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { UserDto } from '../../interfaces/user/user.dto';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ export class AuthService {
   // State management
   private currentUserSubject = new BehaviorSubject<UserDto | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
+  private platformId = inject(PLATFORM_ID);
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
@@ -40,6 +42,19 @@ export class AuthService {
     }
   }
 
+  private getAuthHeaders(): Record<string, string> | undefined {
+    if (!isPlatformBrowser(this.platformId)) {
+      return undefined;
+    }
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return undefined;
+    }
+    return {
+      'Authorization': `Bearer ${token}`
+    };
+  }
+
   login(loginDto: LoginDto): Observable<LoginResp> {
     return this.http.post<LoginResp>(`${this.baseUrl}/sign-in`, loginDto).pipe(
       tap((response: LoginResp) => {
@@ -55,7 +70,10 @@ export class AuthService {
   }
 
   register(registerDto: RegisterDto): Observable<RegisterResp> {
-    return this.http.post<RegisterResp>(`${this.baseUrl}/sign-up`, registerDto);
+    const headers = this.getAuthHeaders();
+    return this.http.post<RegisterResp>(`${this.baseUrl}/sign-up`, registerDto, 
+      headers ? { headers } : {}
+    );
   }
 
   logout(): void {
