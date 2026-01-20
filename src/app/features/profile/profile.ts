@@ -99,6 +99,6 @@ export class Profile implements OnInit, OnDestroy {
   }
 
   showDanger(template: TemplateRef<any>): void {
-    this.toastService.show({ template, classname: 'bg-danger text-light', delay: 15000 });
+    this.toastService.show({ template, classname: 'bg-danger text-light', delay: 1500 });
   }
 }

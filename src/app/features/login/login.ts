@@ -51,6 +51,6 @@ export class Login {
   }
 
   showDanger(template: TemplateRef<any>) {
-		this.toastService.show({ template, classname: 'bg-danger text-light', delay: 15000 });
+		this.toastService.show({ template, classname: 'bg-danger text-light', delay: 1500 });
 	}
 }

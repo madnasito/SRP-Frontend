@@ -53,7 +53,7 @@ export class Register {
   }
 
   showDanger(template: TemplateRef<any>) {
-		this.toastService.show({ template, classname: 'bg-danger text-light', delay: 5000 });
+		this.toastService.show({ template, classname: 'bg-danger text-light', delay: 1500 });
 	}
 
   showSuccess(template: TemplateRef<any>) {
