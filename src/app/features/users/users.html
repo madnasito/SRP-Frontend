@@ -67,6 +67,9 @@
                   <i class="bi" [ngClass]="user.active ? 'bi-person-x-fill' : 'bi-person-check-fill'"></i>
                   {{ user.active ? 'Desactivar' : 'Activar' }}
                 </button>
+                <button class="btn btn-sm btn-outline-info rounded-pill px-3 me-2" (click)="openProgressModal(user)">
+                  <i class="bi bi-bar-chart-fill me-1"></i> Estadísticas
+                </button>
                 <button class="btn btn-sm btn-outline-rose rounded-pill px-3" (click)="openPasswordModal(user)">
                   <i class="bi bi-key-fill me-1"></i> Contraseña
                 </button>
@@ -120,6 +123,83 @@
       </div>
     </div>
     <div class="modal-backdrop fade show" *ngIf="showPasswordModal" (click)="closePasswordModal()"></div>
+
+    <!-- Progress Modal -->
+    <div class="modal fade show" [class.d-block]="showProgressModal" *ngIf="showProgressModal">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content glass-card border-secondary text-white shadow-lg">
+          <div class="modal-header border-secondary p-4">
+            <h5 class="modal-title fw-bold text-rose">
+              <i class="bi bi-bar-chart-line me-2"></i>Progreso Académico: {{ selectedUser?.name }}
+            </h5>
+            <button type="button" class="btn-close btn-close-white" (click)="closeProgressModal()"></button>
+          </div>
+          <div class="modal-body p-4">
+            <div *ngIf="loadingProgress" class="text-center py-4">
+              <div class="spinner-border text-rose" role="status">
+                <span class="visually-hidden">Cargando...</span>
+              </div>
+              <p class="text-white-50 mt-2">Obteniendo datos de progreso...</p>
+            </div>
+
+            <div *ngIf="!loadingProgress && userProgress.length === 0" class="text-center py-4">
+              <i class="bi bi-journal-x text-white-50 display-4 mb-3"></i>
+              <p class="text-white-50">Este usuario aún no tiene progreso registrado en ningún curso.</p>
+            </div>
+
+            <div *ngIf="!loadingProgress && userProgress.length > 0">
+              <div class="row g-4">
+                <div class="col-12 col-md-6" *ngFor="let progress of userProgress">
+                  <div class="progress-card p-3 rounded bg-dark-soft border border-secondary h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <img 
+                        *ngIf="progress.course.imageUrl" 
+                        [src]="progress.course.imageUrl" 
+                        class="rounded me-3 border border-secondary" 
+                        style="width: 48px; height: 48px; object-fit: cover;" 
+                        alt="Curso"
+                      >
+                      <div 
+                        *ngIf="!progress.course.imageUrl" 
+                        class="rounded me-3 border border-secondary bg-dark d-flex align-items-center justify-content-center" 
+                        style="width: 48px; height: 48px;"
+                      >
+                        <i class="bi bi-journal-bookmark text-white-50"></i>
+                      </div>
+                      <div class="flex-grow-1 min-width-0 overflow-hidden">
+                        <span class="fw-bold text-white d-block text-truncate mb-1" [title]="progress.course.title">
+                          {{ progress.course.title }}
+                        </span>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-white-50 small">
+                            {{ progress.completedLessons }}/{{ progress.totalLessons }} lecciones
+                          </small>
+                          <span class="badge bg-rose text-navy small">{{ progress.percent }}%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="progress" style="height: 6px; background-color: rgba(255,255,255,0.1);">
+                      <div 
+                        class="progress-bar bg-rose" 
+                        role="progressbar" 
+                        [style.width.%]="progress.percent" 
+                        [aria-valuenow]="progress.percent" 
+                        aria-valuemin="0" 
+                        aria-valuemax="100">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-secondary">
+            <button type="button" class="btn btn-navy" (click)="closeProgressModal()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade show" *ngIf="showProgressModal" (click)="closeProgressModal()"></div>
 
     <div class="mt-4 text-white-50 small">
       <i class="bi bi-info-circle me-1"></i> Total de usuarios registrados: {{ users.length }}

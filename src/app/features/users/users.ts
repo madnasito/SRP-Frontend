@@ -3,7 +3,9 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../core/services/user/user-service';
 import { AuthService } from '../../core/services/auth/auth';
+import { CourseService } from '../../core/services/course/course-service';
 import { UserDto } from '../../core/interfaces/user/user.dto';
+import { ProgressModel } from '../../core/interfaces/course/progress-model.interface';
 import { ToastService } from '../../shared/services/toast.service';
 import { RouterModule } from '@angular/router';
 
@@ -20,6 +22,7 @@ export class Users implements OnInit {
   private fb = inject(FormBuilder);
   private toastService = inject(ToastService);
   private authService = inject(AuthService);
+  private courseService = inject(CourseService);
 
   @ViewChild('dangerTpl') dangerTpl!: TemplateRef<any>;
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
@@ -31,7 +34,10 @@ export class Users implements OnInit {
 
   // Modal State
   showPasswordModal = false;
+  showProgressModal = false;
   selectedUser: UserDto | null = null;
+  userProgress: ProgressModel[] = [];
+  loadingProgress = false;
   passwordForm: FormGroup;
 
   constructor() {
@@ -111,6 +117,34 @@ export class Users implements OnInit {
         this.showError(`Error al ${user.active ? 'desactivar' : 'activar'} el usuario`);
       }
     });
+  }
+
+  openProgressModal(user: UserDto): void {
+    this.selectedUser = user;
+    this.showProgressModal = true;
+    this.loadingProgress = true;
+    this.userProgress = [];
+
+    this.courseService.getUserProgress(user.id).subscribe({
+      next: (progress) => {
+        this.userProgress = progress;
+        this.loadingProgress = false;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error fetching user progress:', error);
+        this.showError('Error al cargar el progreso del usuario');
+        this.loadingProgress = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  closeProgressModal(): void {
+    this.showProgressModal = false;
+    this.selectedUser = null;
+    this.userProgress = [];
+    this.cdr.detectChanges();
   }
 
   private showSuccess(message: string): void {

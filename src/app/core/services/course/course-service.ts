@@ -91,6 +91,14 @@ export class CourseService {
     );
   }
 
+  getUserProgress(id: number): Observable<ProgressModel[]> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<ProgressModel[]>(`${this.baseUrl}/user-progress`, {
+      params: { id },
+      ...(headers ? { headers } : {})
+    });
+  }
+
   editCourse(course: EditCourseDto): Observable<Course> {
     const headers = this.getAuthHeaders();
     return this.http.patch<Course>(`${this.baseUrl}/edit-course`, course, 
