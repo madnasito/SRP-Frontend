@@ -60,6 +60,7 @@
                 class="nav-link fs-5 text-white"
                 routerLink="/my-progress"
                 routerLinkActive="active"
+                *ngIf="isAuthenticated && !isAdmin"
                 >Mi Progreso</a
               >
             </li>
