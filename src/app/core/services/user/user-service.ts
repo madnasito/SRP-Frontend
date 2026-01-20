@@ -56,4 +56,28 @@ export class UserService {
       headers ? { headers } : {}
     );
   }
+
+  deactivateUser(userId: number) {
+    const headers = this.getAuthHeaders();
+    return this.http.delete<UserDto>(`${this.baseUrl}/deactivate`,
+      {
+        params: {
+          id: userId.toString(),
+        },
+        headers
+      },
+    );
+  }
+
+  activeUser(userId: number) {
+    const headers = this.getAuthHeaders();
+    return this.http.delete<UserDto>(`${this.baseUrl}/activate`,
+      {
+        params: {
+          id: userId.toString(),
+        },
+        headers
+      },
+    );
+  }
 }

@@ -2,6 +2,7 @@ import { Component, inject, OnInit, ChangeDetectorRef, PLATFORM_ID, ViewChild, T
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../core/services/user/user-service';
+import { AuthService } from '../../core/services/auth/auth';
 import { UserDto } from '../../core/interfaces/user/user.dto';
 import { ToastService } from '../../shared/services/toast.service';
 import { RouterModule } from '@angular/router';
@@ -18,6 +19,7 @@ export class Users implements OnInit {
   private platformId = inject(PLATFORM_ID);
   private fb = inject(FormBuilder);
   private toastService = inject(ToastService);
+  private authService = inject(AuthService);
 
   @ViewChild('dangerTpl') dangerTpl!: TemplateRef<any>;
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
@@ -50,7 +52,8 @@ export class Users implements OnInit {
     this.loading = true;
     this.userService.getAllUsers().subscribe({
       next: (users) => {
-        this.users = users;
+        const currentUser = this.authService.getCurrentUser();
+        this.users = currentUser ? users.filter(u => u.id !== currentUser.id) : users;
         this.loading = false;
         this.cdr.detectChanges();
       },
@@ -90,6 +93,22 @@ export class Users implements OnInit {
       },
       error: (error) => {
         this.showError('Error al actualizar la contraseña');
+      }
+    });
+  }
+
+  toggleUserStatus(user: UserDto): void {
+    const action = user.active ? this.userService.deactivateUser(user.id) : this.userService.activeUser(user.id);
+    const statusText = user.active ? 'desactivado' : 'activado';
+
+    action.subscribe({
+      next: () => {
+        this.showSuccess(`Usuario ${user.name} ${statusText} con éxito`);
+        this.loadUsers();
+      },
+      error: (error) => {
+        console.error(`Error al ${user.active ? 'desactivar' : 'activar'} usuario:`, error);
+        this.showError(`Error al ${user.active ? 'desactivar' : 'activar'} el usuario`);
       }
     });
   }

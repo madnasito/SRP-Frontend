@@ -59,6 +59,14 @@
                 <span class="text-white-50 small ms-2">{{ user.active ? 'Activo' : 'Inactivo' }}</span>
               </td>
               <td class="text-end pe-4">
+                <button 
+                  class="btn btn-sm rounded-pill px-3 me-2" 
+                  [ngClass]="user.active ? 'btn-outline-danger' : 'btn-outline-success'"
+                  (click)="toggleUserStatus(user)"
+                >
+                  <i class="bi" [ngClass]="user.active ? 'bi-person-x-fill' : 'bi-person-check-fill'"></i>
+                  {{ user.active ? 'Desactivar' : 'Activar' }}
+                </button>
                 <button class="btn btn-sm btn-outline-rose rounded-pill px-3" (click)="openPasswordModal(user)">
                   <i class="bi bi-key-fill me-1"></i> Contraseña
                 </button>
