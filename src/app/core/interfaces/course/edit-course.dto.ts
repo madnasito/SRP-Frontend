@@ -9,6 +9,7 @@ export interface EditCourseDto {
     title:       string;
     description: string;
     imageUrl?:   string;
+    categoryId?: number;
 }
 
 // Converts JSON strings to/from your types

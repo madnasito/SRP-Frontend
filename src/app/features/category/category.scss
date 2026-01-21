@@ -1,0 +1,253 @@
+// Variables
+$old-rose: #d69ca0;
+$navy-blue: #002147;
+$gold: #d4af37;
+
+.category-container {
+  min-height: 100vh;
+}
+
+.text-rose {
+  color: $old-rose !important;
+}
+
+.text-gold {
+  color: $gold !important;
+}
+
+// Category Hero Section
+.category-hero-section {
+  padding: 4rem 0;
+  background: radial-gradient(circle at top right, rgba($navy-blue, 0.45) 0%, transparent 70%);
+  border-bottom: 1px solid rgba($old-rose, 0.1);
+
+  .category-image-wrapper {
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+    .category-image {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      z-index: 2;
+      position: relative;
+      transition: transform 0.5s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border: 2px solid $old-rose;
+      border-radius: 1.5rem;
+      z-index: 1;
+      transition: all 0.5s ease;
+      opacity: 0.5;
+    }
+
+    &:hover {
+      .category-image {
+        transform: translate(-8px, -8px);
+      }
+      &::before {
+        transform: translate(8px, 8px);
+        opacity: 1;
+        box-shadow: 0 0 20px rgba($old-rose, 0.3);
+      }
+    }
+  }
+
+  .category-title {
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(45deg, #fff, $old-rose);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 3.5rem;
+  }
+}
+
+// Pillar Card (reused for Mission/Vision)
+.pillar-card {
+  background: rgba(33, 37, 41, 0.45);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: $old-rose !important;
+    background: rgba($navy-blue, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .pillar-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+  }
+}
+
+.pillar-text {
+  line-height: 1.7;
+}
+
+// Courses Section & Carousel (adapted from home.scss)
+.carousel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.course-card {
+  cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba($old-rose, 0.2);
+  }
+}
+
+.course-image-container {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+}
+
+.course-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.course-card:hover .course-image {
+  transform: scale(1.1);
+}
+
+.course-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 60%,
+    transparent 100%
+  );
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 150px;
+}
+
+.course-title {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.btn-navy {
+  background-color: $navy-blue;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $old-rose !important;
+    border-color: $old-rose !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(214, 156, 160, 0.4);
+    color: white;
+  }
+}
+
+.bg-navy-circle {
+  background-color: rgba($navy-blue, 0.8);
+  border-radius: 50%;
+  padding: 2.5rem;
+  background-size: 50%;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $old-rose;
+    transform: scale(1.1);
+  }
+}
+
+.carousel-indicators {
+  bottom: -30px;
+  button {
+    background-color: $old-rose;
+    opacity: 0.3;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 6px;
+
+    &.active {
+      opacity: 1;
+      width: 30px;
+      border-radius: 10px;
+    }
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 992px) {
+  .category-hero-section {
+    text-align: center;
+    .category-image-wrapper {
+      margin: 0 auto 3rem;
+    }
+  }
+  .category-title {
+    font-size: 2.75rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .course-image-container {
+    height: 350px;
+  }
+}
+
+@media (max-width: 576px) {
+  .category-title {
+    font-size: 2.2rem !important;
+  }
+  .course-image-container {
+    height: 300px;
+  }
+}
+
+// Category Not Found
+.category-not-found-container {
+  background: radial-gradient(circle at center, rgba($navy-blue, 0.45) 0%, transparent 100%);
+  
+  .error-icon {
+    animation: pulse 2s infinite ease-in-out;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 0.5; }
+}

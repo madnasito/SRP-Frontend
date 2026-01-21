@@ -1,0 +1,122 @@
+<div class="category-container container-fluid min-vh-100 py-0" *ngIf="category">
+  
+  <!-- Category Hero Section -->
+  <section class="category-hero-section py-5">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5 order-lg-2">
+          <div class="category-image-wrapper">
+            <img [src]="category.imageUrl" [alt]="category.name" class="category-image img-fluid rounded-4 shadow-lg border border-rose">
+          </div>
+        </div>
+        <div class="col-lg-7 order-lg-1">
+          <div class="category-text-content">
+            <h1 class="category-title display-3 fw-bold mb-3">{{ category.name }}</h1>
+            <div class="category-mission-vision mt-4">
+              <div class="pillar-card p-4 rounded-4 border border-secondary mb-4" *ngIf="category.mission">
+                <h3 class="pillar-title text-rose mb-3"><i class="bi bi-bullseye me-2"></i>Misión</h3>
+                <p class="pillar-text text-light opacity-75">{{ category.mission }}</p>
+              </div>
+              <div class="pillar-card p-4 rounded-4 border border-secondary" *ngIf="category.vision">
+                <h3 class="pillar-title text-rose mb-3"><i class="bi bi-eye me-2"></i>Visión</h3>
+                <p class="pillar-text text-light opacity-75">{{ category.vision }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses Section (Carousel) -->
+  <section id="courses" class="courses-section py-5">
+    <div class="content-wrapper">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold text-white mb-3">Cursos en "{{ category.name }}"</h2>
+        <p class="lead text-rose">Transformación real a través de nuestros programas</p>
+      </div>
+
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border text-rose" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading && courses.length === 0" class="text-center text-white">
+        <p class="lead">No hay cursos disponibles en esta categoría en este momento.</p>
+      </div>
+
+      <div *ngIf="!loading && chunkedCourses.length > 0" class="carousel-container pb-5">
+        <div id="coursesCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators" *ngIf="chunkedCourses.length > 1">
+            <button 
+              *ngFor="let chunk of chunkedCourses; let i = index" 
+              type="button" 
+              [attr.data-bs-target]="'#coursesCarousel'" 
+              [attr.data-bs-slide-to]="i" 
+              [class.active]="i === 0"
+              [attr.aria-current]="i === 0 ? 'true' : null"
+              [attr.aria-label]="'Slide ' + (i + 1)"
+            ></button>
+          </div>
+
+          <div class="carousel-inner">
+            <div 
+              *ngFor="let chunk of chunkedCourses; let i = index" 
+              class="carousel-item" 
+              [class.active]="i === 0"
+            >
+              <div class="row g-4 justify-content-center px-lg-5">
+                <div *ngFor="let course of chunk" class="col-lg-4 col-md-6">
+                  <div class="course-card" (click)="navigateToCourse(course.id)">
+                    <div class="course-image-container">
+                      <img 
+                        [src]="course.imageUrl" 
+                        [alt]="course.title"
+                        class="course-image"
+                      >
+                      <div class="course-overlay">
+                        <h3 class="course-title">{{ course.title }}</h3>
+                        <button class="btn btn-navy px-4 mt-3">
+                          <i class="bi bi-play-circle me-2"></i>Ver Curso
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ng-container *ngIf="chunkedCourses.length > 1">
+            <button class="carousel-control-prev" type="button" data-bs-target="#coursesCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon bg-navy-circle" aria-hidden="true"></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#coursesCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon bg-navy-circle" aria-hidden="true"></span>
+              <span class="visually-hidden">Siguiente</span>
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div *ngIf="categoryNotFound && !loading" class="category-not-found-container d-flex flex-column justify-content-center align-items-center min-vh-100 text-center px-4">
+  <div class="error-icon mb-4">
+    <i class="bi bi-search display-1 text-rose opacity-50"></i>
+  </div>
+  <h1 class="display-4 fw-bold text-white mb-3">Categoría no encontrada</h1>
+  <p class="lead text-light opacity-75 mb-5">Lo sentimos, la categoría que buscas no existe o no está disponible en este momento.</p>
+  <a routerLink="/" class="btn btn-navy btn-lg rounded-pill px-5 py-3">
+    <i class="bi bi-house-door-fill me-2"></i>Volver al Inicio
+  </a>
+</div>
+
+<div *ngIf="loading && !category && !categoryNotFound" class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="spinner-border text-rose" style="width: 3rem; height: 3rem;" role="status">
+    <span class="visually-hidden">Cargando categoría...</span>
+  </div>
+</div>

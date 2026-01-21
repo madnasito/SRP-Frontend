@@ -88,12 +88,12 @@
     </div>
   </section>
 
-  <!-- Courses Section (Carousel) -->
-  <section id="courses" class="courses-section py-5">
+  <!-- Categories Section (Carousel) -->
+  <section id="categories" class="categories-section py-5">
     <div class="content-wrapper">
       <div class="text-center mb-5">
         <h2 class="display-5 fw-bold text-white mb-3">Nuestra Academia</h2>
-        <p class="lead text-rose">Transformación real a través de nuestros programas</p>
+        <p class="lead text-rose">Explora nuestras categorías de formación</p>
       </div>
 
       <div *ngIf="loading" class="text-center">
@@ -102,17 +102,17 @@
         </div>
       </div>
 
-      <div *ngIf="!loading && courses.length === 0" class="text-center text-white">
-        <p class="lead">No hay cursos disponibles en este momento.</p>
+      <div *ngIf="!loading && categories.length === 0" class="text-center text-white">
+        <p class="lead">No hay categorías disponibles en este momento.</p>
       </div>
 
-      <div *ngIf="!loading && chunkedCourses.length > 0" class="carousel-container pb-5">
-        <div id="coursesCarousel" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-indicators">
+      <div *ngIf="!loading && chunkedCategories.length > 0" class="carousel-container pb-5">
+        <div id="categoriesCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators" *ngIf="chunkedCategories.length > 1">
             <button 
-              *ngFor="let chunk of chunkedCourses; let i = index" 
+              *ngFor="let chunk of chunkedCategories; let i = index" 
               type="button" 
-              [attr.data-bs-target]="'#coursesCarousel'" 
+              [attr.data-bs-target]="'#categoriesCarousel'" 
               [attr.data-bs-slide-to]="i" 
               [class.active]="i === 0"
               [attr.aria-current]="i === 0 ? 'true' : null"
@@ -122,23 +122,23 @@
 
           <div class="carousel-inner">
             <div 
-              *ngFor="let chunk of chunkedCourses; let i = index" 
+              *ngFor="let chunk of chunkedCategories; let i = index" 
               class="carousel-item" 
               [class.active]="i === 0"
             >
               <div class="row g-4 justify-content-center px-lg-5">
-                <div *ngFor="let course of chunk" class="col-lg-4 col-md-6">
-                  <div class="course-card" (click)="navigateToCourse(course.id)">
+                <div *ngFor="let category of chunk" class="col-lg-4 col-md-6">
+                  <div class="course-card" (click)="navigateToCategory(category.id)">
                     <div class="course-image-container">
                       <img 
-                        [src]="course.imageUrl" 
-                        [alt]="course.title"
+                        [src]="category.imageUrl" 
+                        [alt]="category.name"
                         class="course-image"
                       >
                       <div class="course-overlay">
-                        <h3 class="course-title">{{ course.title }}</h3>
+                        <h3 class="course-title">{{ category.name }}</h3>
                         <button class="btn btn-navy px-4 mt-3">
-                          <i class="bi bi-play-circle me-2"></i>Ver Curso
+                          <i class="bi bi-arrow-right-circle me-2"></i>Ver Cursos
                         </button>
                       </div>
                     </div>
@@ -148,14 +148,16 @@
             </div>
           </div>
 
-          <button class="carousel-control-prev" type="button" data-bs-target="#coursesCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-navy-circle" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#coursesCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-navy-circle" aria-hidden="true"></span>
-            <span class="visually-hidden">Siguiente</span>
-          </button>
+          <ng-container *ngIf="chunkedCategories.length > 1">
+            <button class="carousel-control-prev" type="button" data-bs-target="#categoriesCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon bg-navy-circle" aria-hidden="true"></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#categoriesCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon bg-navy-circle" aria-hidden="true"></span>
+              <span class="visually-hidden">Siguiente</span>
+            </button>
+          </ng-container>
         </div>
       </div>
     </div>

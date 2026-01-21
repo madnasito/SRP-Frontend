@@ -10,6 +10,7 @@ import { Course } from './features/course/course';
 import { Courses } from './features/courses/courses';
 import { Messages } from './features/messages/messages';
 import { Users } from './features/users/users';
+import { Category } from './features/category/category';
 
 export const routes: Routes = [
     {
@@ -55,5 +56,13 @@ export const routes: Routes = [
     {
         path: 'users',
         component: Users
+    },
+    {
+        path: 'category/:id',
+        component: Category
+    },
+    {
+        path: '**',
+        redirectTo: ''
     }
 ];

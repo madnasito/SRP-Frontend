@@ -62,6 +62,10 @@ export class CourseService {
     return this.http.get<CourseWithLessons>(`${this.baseUrl}/with-lessons`, { params: { id } });
   }
 
+  getCourseByCategoryId(id: number): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/by-category/${id}`);
+  }
+
   getMyProgress(): Observable<ProgressModel[]> {
     const headers = this.getAuthHeaders();
     return this.http.get<ProgressModel[]>(`${this.baseUrl}/my-progress`, 

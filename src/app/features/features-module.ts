@@ -14,11 +14,13 @@ import { Course } from './course/course';
 import { Courses } from './courses/courses';
 import { Messages } from './messages/messages';
 import { Users } from './users/users';
+import { Category } from './category/category';
 
 
 @NgModule({
   declarations: [
-    Home, Faq, MyProgress, Profile, Ask, Login, Register, Course, Courses, Messages, Users
+    Home, Faq, MyProgress, Profile, Ask, Login, Register, Course, Courses, Messages, Users,
+    Category
   ],
   imports: [
     CommonModule,

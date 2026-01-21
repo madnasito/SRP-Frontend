@@ -2,6 +2,7 @@ export interface CreateCourseDto {
     title:       string;
     description: string;
     imageUrl:    string;
+    categoryId:  number;
 }
 
 export class Convert {

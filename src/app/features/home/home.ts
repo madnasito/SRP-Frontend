@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import { CourseService } from '../../core/services/course/course-service';
-import { Course } from '../../core/interfaces/course/course.interface';
+import { CategoryService } from '../../core/services/category/category';
+import { Category } from '../../core/interfaces/category/category';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment.debug';
 
@@ -11,19 +11,19 @@ import { environment } from '../../../environments/environment.debug';
   styleUrl: './home.scss',
 })
 export class Home implements OnInit {
-  private courseService = inject(CourseService);
+  private categoryService = inject(CategoryService);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   
-  courses: Course[] = [];
-  chunkedCourses: Course[][] = [];
+  categories: Category[] = [];
+  chunkedCategories: Category[][] = [];
   loading = true;
   apiUrl = environment.apiUrl;
 
   ngOnInit(): void {
-    this.courseService.getAllCourses().subscribe({
-      next: (courses) => {
-        this.courses = courses.filter(c => c.active).map(c => {
+    this.categoryService.getAllCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories.map(c => {
           let url = c.imageUrl;
           if (url && !url.startsWith('http')) {
             const apiBase = this.apiUrl.endsWith('/') ? this.apiUrl.slice(0, -1) : this.apiUrl;
@@ -32,7 +32,7 @@ export class Home implements OnInit {
           }
           return { ...c, imageUrl: url };
         });
-        this.chunkedCourses = this.chunkArray(this.courses, 3);
+        this.chunkedCategories = this.chunkArray(this.categories, 3);
         this.loading = false;
         this.cdr.detectChanges();
       },
@@ -43,8 +43,8 @@ export class Home implements OnInit {
     });
   }
 
-  navigateToCourse(courseId: number): void {
-    this.router.navigate(['/course', courseId]);
+  navigateToCategory(categoryId: number): void {
+    this.router.navigate(['/category', categoryId]);
   }
 
   private chunkArray(array: any[], size: number): any[][] {

@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CourseService } from '../../core/services/course/course-service';
+import { CategoryService } from '../../core/services/category/category';
 import { Course } from '../../core/interfaces/course/course.interface';
+import { Category } from '../../core/interfaces/category/category';
 import { CreateCourseDto } from '../../core/interfaces/course/create-course.dto';
 import { EditCourseDto } from '../../core/interfaces/course/edit-course.dto';
 import { CreateLessonDto } from '../../core/interfaces/course/create-lesson.dto';
@@ -18,6 +20,7 @@ import { environment } from '../../../environments/environment.debug';
 })
 export class Courses implements OnInit {
   private courseService = inject(CourseService);
+  private categoryService = inject(CategoryService);
   private fb = inject(FormBuilder);
   private cdr = inject(ChangeDetectorRef);
   private toastService = inject(ToastService);
@@ -26,6 +29,7 @@ export class Courses implements OnInit {
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
 
   courses: Course[] = [];
+  categories: Category[] = [];
   loading = true;
   errorMessage = '';
   successMessage = '';
@@ -51,6 +55,7 @@ export class Courses implements OnInit {
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       imageUrl: ['', [Validators.required]],
+      categoryId: [null, [Validators.required]],
     });
 
     this.lessonForm = this.fb.group({
@@ -62,6 +67,7 @@ export class Courses implements OnInit {
 
   ngOnInit(): void {
     this.loadCourses();
+    this.loadCategories();
   }
 
   loadCourses(): void {
@@ -89,6 +95,19 @@ export class Courses implements OnInit {
     });
   }
 
+  loadCategories(): void {
+    this.categoryService.getAllCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error loading categories', err);
+        this.showError('Error al cargar las categorías');
+      }
+    });
+  }
+
   // Course Actions
   openCreateCourseModal(): void {
     this.isEditingCourse = false;
@@ -103,7 +122,8 @@ export class Courses implements OnInit {
       id: course.id,
       title: course.title,
       description: course.description,
-      imageUrl: course.imageUrl
+      imageUrl: course.imageUrl,
+      categoryId: course.categoryId
     });
     this.showCourseModal = true;
     this.cdr.detectChanges();
