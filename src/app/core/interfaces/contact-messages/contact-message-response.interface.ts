@@ -5,10 +5,21 @@
 //   const contactMessageResponse = Convert.toContactMessageResponse(json);
 
 export interface ContactMessageResponse {
+    data: Message[];
+    meta: Meta;
+}
+
+export interface Message {
     id:      number;
     content: string;
     email:   string;
     date:    Date;
+}
+
+export interface Meta {
+    total:    number;
+    page:     number;
+    lastPage: number;
 }
 
 // Converts JSON strings to/from your types

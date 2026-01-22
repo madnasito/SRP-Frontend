@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ContactService } from '../../core/services/contact-messages/contact-service';
-import { ContactMessageResponse } from '../../core/interfaces/contact-messages/contact-message-response.interface';
+import { ContactMessageResponse, Message } from '../../core/interfaces/contact-messages/contact-message-response.interface';
 
 @Component({
   selector: 'app-messages',
@@ -12,18 +12,23 @@ export class Messages implements OnInit {
   private contactService = inject(ContactService);
   private cdr = inject(ChangeDetectorRef);
 
-  messages: ContactMessageResponse[] = [];
+  messages: Message[] = [];
   loading = true;
+  currentPage = 1;
+  limit = 20;
+  totalPages = 1;
 
   ngOnInit(): void {
-    this.loadMessages();
+    this.loadMessages(this.currentPage);
   }
 
-  loadMessages(): void {
+  loadMessages(page: number): void {
     this.loading = true;
-    this.contactService.getMessages().subscribe({
+    this.contactService.getMessages(page, this.limit).subscribe({
       next: (data) => {
-        this.messages = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        this.messages = data.data;
+        this.totalPages = data.meta.lastPage;
+        this.currentPage = data.meta.page;
         this.loading = false;
         this.cdr.detectChanges();
       },
@@ -33,5 +38,15 @@ export class Messages implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.loadMessages(page);
+    }
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 }

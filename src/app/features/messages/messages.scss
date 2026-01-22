@@ -70,12 +70,53 @@ $navy-blue: #002147;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
   .display-4 {
     font-size: 2.2rem;
+  }
+}
+
+// Custom Pagination
+.custom-pagination {
+  .page-item {
+    margin: 0 4px;
+
+    .page-link {
+      background: rgba(33, 37, 41, 0.45);
+      border: 1px solid rgba($old-rose, 0.2);
+      color: white;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba($old-rose, 0.2);
+        border-color: $old-rose;
+        color: white;
+      }
+    }
+
+    &.active .page-link {
+      background: $old-rose;
+      border-color: $old-rose;
+      color: #fff;
+    }
+
+    &.disabled .page-link {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.1);
+      opacity: 0.3;
+      color: rgba(255, 255, 255, 0.5);
+    }
   }
 }
