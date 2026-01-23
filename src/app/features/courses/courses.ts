@@ -81,7 +81,8 @@ export class Courses implements OnInit {
             const imagePath = url.startsWith('/') ? url : `/${url}`;
             url = `${apiBase}${imagePath}`;
           }
-          return { ...c, imageUrl: url };
+          const categoryId = c.categoryId || (c as any).category?.id;
+          return { ...c, imageUrl: url, categoryId };
         });
         this.loading = false;
         this.cdr.detectChanges();
@@ -116,14 +117,18 @@ export class Courses implements OnInit {
     this.cdr.detectChanges();
   }
 
-  openEditCourseModal(course: Course): void {
+  openEditCourseModal(course: any): void {
     this.isEditingCourse = true;
+    
+    // Ensure we have a category ID, checking both direct property and nested object
+    const categoryId = course.categoryId || course.category?.id;
+    
     this.courseForm.patchValue({
       id: course.id,
       title: course.title,
       description: course.description,
       imageUrl: course.imageUrl,
-      categoryId: course.categoryId
+      categoryId: categoryId
     });
     this.showCourseModal = true;
     this.cdr.detectChanges();

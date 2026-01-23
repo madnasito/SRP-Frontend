@@ -2,19 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Header } from './header/header';
 import { RouterModule } from '@angular/router';
+import { Footer } from './footer/footer';
 
 
 
 @NgModule({
   declarations: [
-    Header
+    Header,
+    Footer
   ],
   imports: [
     CommonModule,
     RouterModule
   ],
   exports: [
-    Header
+    Header,
+    Footer
   ]
 })
 export class SharedModule { }

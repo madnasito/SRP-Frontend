@@ -1,0 +1,56 @@
+$old-rose: #d69ca0;
+$navy-blue: #002147;
+$gold: #d4af37;
+
+.footer {
+  background: rgba(33, 37, 41, 0.45);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba($old-rose, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, $old-rose, transparent);
+    opacity: 0.3;
+  }
+}
+
+.academia-title {
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(45deg, #fff, $old-rose);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.text-rose {
+  color: $old-rose;
+}
+
+.social-links {
+  .social-icon {
+    font-size: 1.5rem;
+    color: white;
+    opacity: 0.6;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+
+    &:hover {
+      opacity: 1;
+      color: $old-rose;
+      transform: translateY(-5px) scale(1.1);
+      text-shadow: 0 0 15px rgba($old-rose, 0.4);
+    }
+  }
+}
+
+.footer-divider {
+  border-top-width: 2px;
+}
