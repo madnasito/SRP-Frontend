@@ -21,10 +21,10 @@ $gold: #d4af37;
   border-bottom: 1px solid rgba($old-rose, 0.1);
 
   .academia-image-wrapper {
-    max-width: 450px;
+    max-width: 400px;
     position: relative;
     transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -42,14 +42,14 @@ $gold: #d4af37;
     .academia-image {
       width: 100%;
       height: auto;
-      aspect-ratio: 2/3; // Vertical aspect ratio
+      aspect-ratio: 3/4; // Less tall aspect ratio
       object-fit: cover;
       z-index: 2;
       position: relative;
       transition: transform 0.5s ease;
       // Initial alignment: move up and left as requested
-      
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
 
     &:hover {
@@ -84,7 +84,7 @@ $gold: #d4af37;
   max-width: 400px;
   position: relative;
   transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-  
+
   .hero-image {
     width: 100%;
     object-fit: cover;
@@ -251,7 +251,7 @@ $gold: #d4af37;
   padding: 2.5rem;
   background-size: 50%;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background-color: $old-rose;
     transform: scale(1.1);
@@ -290,9 +290,14 @@ $gold: #d4af37;
   .academia-image-wrapper {
     margin-left: auto;
     margin-right: auto;
+    max-width: 220px; // Further reduced for mobile
   }
   .name-display {
     font-size: 2.75rem;
+  }
+
+  .academia-image {
+    max-height: 420px;
   }
 }
 
